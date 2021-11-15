@@ -7,12 +7,11 @@ export type FeatureCategory = typeof FeatureCategoryOptions[number];
 
 export const FeatureMeta: Record<
   string,
-  | {
-      label: string;
-      description?: string;
-      category?: FeatureCategory;
-    }
-  | string
+  {
+    label: string;
+    description?: string;
+    category?: FeatureCategory;
+  }
 > = {
   watchers: {
     label: 'Watchers',
