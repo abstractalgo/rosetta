@@ -9,6 +9,7 @@ import remarkGfm from 'remark-gfm';
 const LangSelect = Select.ofType<Language>();
 
 type ColumnProps = {
+  feature: Feature;
   availableLangs: Language[];
   lang: Language | null;
   content?: string;
@@ -17,6 +18,7 @@ type ColumnProps = {
 };
 
 export const Column: FC<ColumnProps> = ({
+  feature,
   availableLangs,
   lang,
   content,
@@ -69,7 +71,15 @@ export const Column: FC<ColumnProps> = ({
         <p>Please select a language from the list.</p>
       ) : (
         <div className="markdown">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          View{' '}
+          <a
+            href={`/rosetta/${feature}/${lang}.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            raw
+          </a>
+          .<ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
         </div>
       )}
     </div>

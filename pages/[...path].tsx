@@ -134,6 +134,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
               : [...langs, null]
             ).map((lang, idx) => (
               <Column
+                feature={feature}
                 availableLangs={availableLangs.filter(
                   (item) => item === lang || !langs.includes(item),
                 )}
