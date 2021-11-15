@@ -8,7 +8,7 @@ You install `nodemon` as a (dev) package and then do something like `nodemon ./s
 
 Previously `nodemon` was unable to work with Typescript files, but now it can, by utilizing `ts-node`.
 
-You can configure it all through CLI, `nodemonConfig` region in the `package.json`, or by providing a config file (usually `nodeom.json`).
+You can configure it all through CLI, `nodemonConfig` region in the `package.json`, or by providing a config file (usually `nodemon.json`).
 
 # Using `tsc --watch`
 
