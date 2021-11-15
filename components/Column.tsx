@@ -1,4 +1,4 @@
-import { Button, MenuItem } from '@blueprintjs/core';
+import { Button, ButtonGroup, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC } from 'react';
 import { Feature } from '../utils/features';
@@ -24,44 +24,46 @@ export const Column: FC<ColumnProps> = ({
   onRemove,
 }) => {
   return (
-    <div className="column">
-      <LangSelect
-        filterable
-        activeItem={lang}
-        items={availableLangs}
-        popoverProps={{
-          minimal: true,
-        }}
-        inputProps={{
-          small: true,
-        }}
-        itemRenderer={(
-          langItem,
-          { handleClick, modifiers: { active, disabled } },
-        ) => (
-          <MenuItem
-            key={langItem}
-            selected={active}
-            onClick={handleClick}
-            text={LanguageMeta[langItem].label}
+    <div className="column" /* bp4-dark */>
+      <ButtonGroup>
+        <LangSelect
+          filterable
+          activeItem={lang}
+          items={availableLangs}
+          popoverProps={{
+            minimal: true,
+          }}
+          inputProps={{
+            small: true,
+          }}
+          itemRenderer={(
+            langItem,
+            { handleClick, modifiers: { active, disabled } },
+          ) => (
+            <MenuItem
+              key={langItem}
+              selected={active}
+              onClick={handleClick}
+              text={LanguageMeta[langItem].label}
+            />
+          )}
+          onItemSelect={(langItem) => onSelect(langItem)}
+          itemPredicate={(query, langItem) => {
+            if (!query || lang === langItem) {
+              return true;
+            }
+            return [langItem, ...(LanguageMeta[langItem].alt || [])]
+              .map((name) => name.toLowerCase())
+              .some((name) => name.match(query.toLowerCase()));
+          }}
+        >
+          <Button
+            text={lang ? LanguageMeta[lang].label : 'Select language...'}
+            small
           />
-        )}
-        onItemSelect={(langItem) => onSelect(langItem)}
-        itemPredicate={(query, langItem) => {
-          if (!query || lang === langItem) {
-            return true;
-          }
-          return [langItem, ...(LanguageMeta[langItem].alt || [])]
-            .map((name) => name.toLowerCase())
-            .some((name) => name.match(query.toLowerCase()));
-        }}
-      >
-        <Button
-          text={lang ? LanguageMeta[lang].label : 'Select language...'}
-          small
-        />
-      </LangSelect>
-      {lang && <Button small icon="small-cross" onClick={() => onRemove()} />}
+        </LangSelect>
+        {lang && <Button small icon="small-cross" onClick={() => onRemove()} />}
+      </ButtonGroup>
 
       {!lang || !content ? (
         <p>Please select a language from the list.</p>

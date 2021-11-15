@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export const FeatureOptions = ['watchers'] as const;
 
 export type Feature = typeof FeatureOptions[number];
@@ -9,7 +11,7 @@ export const FeatureMeta: Record<
   string,
   {
     label: string;
-    description?: string;
+    description?: ReactNode;
     category?: FeatureCategory;
   }
 > = {
