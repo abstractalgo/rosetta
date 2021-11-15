@@ -112,7 +112,6 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
             <Column
               availableLangs={availableLangs}
               key={`${lang}-${idx}`}
-              feature={feature}
               lang={lang}
               content={lang ? files[lang] : undefined}
               onSelect={(selectedLang) => {
