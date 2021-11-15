@@ -187,15 +187,10 @@ export async function getServerSideProps(context: NextPageContext) {
   if (feature && FeatureOptions.includes(feature)) {
     props.query.feature = feature;
 
-    const filenames = await readdir(
-      `${PREFIX}/rosetta/${props.query.feature}`,
-      {
-        encoding: 'utf-8',
-      },
-    );
+    const filenames = await readdir(`${PREFIX}/rosetta/${props.query.feature}`);
 
     props.availableLangs = filenames
-      .map((filename) => filename.replace('.md', '') as Language)
+      .map((filename) => filename.toString().replace('.md', '') as Language)
       .filter((name) => LanguageOptions.includes(name as Language));
   }
 
@@ -210,13 +205,13 @@ export async function getServerSideProps(context: NextPageContext) {
     const files = await Promise.all(
       props.query.langs.map((lang) => {
         const path = `${PREFIX}/rosetta/${feature}/${lang}.md`;
-        return readFile(path, {
-          encoding: 'utf-8',
-        });
+        return readFile(path);
       }),
     );
 
-    props.query.langs.map((lang, idx) => (props.files[lang] = files[idx]));
+    props.query.langs.map(
+      (lang, idx) => (props.files[lang] = files[idx]?.toString()),
+    );
   }
 
   return {
