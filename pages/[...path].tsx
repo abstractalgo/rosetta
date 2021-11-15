@@ -159,9 +159,14 @@ export async function getServerSideProps(context: NextPageContext) {
   if (feature && FeatureOptions.includes(feature)) {
     props.query.feature = feature;
 
-    const filenames = await readdir(`./rosetta/${props.query.feature}`, {
-      encoding: 'utf-8',
-    });
+    const PREFIX = process.env.NODE_ENV === 'production' ? '..' : '.';
+
+    const filenames = await readdir(
+      `${__dirname}/rosetta/${props.query.feature}`,
+      {
+        encoding: 'utf-8',
+      },
+    );
 
     props.availableLangs = filenames
       .map((filename) => filename.replace('.md', '') as Language)
