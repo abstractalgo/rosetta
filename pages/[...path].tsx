@@ -155,8 +155,7 @@ export async function getServerSideProps(context: NextPageContext) {
     },
   };
 
-  const PREFIX = process.env.NODE_ENV === 'production' ? __dirname : './pages';
-  // const PREFIX = __dirname;
+  const PREFIX = process.env.NODE_ENV === 'production' ? '' : '.';
 
   // verify 'feature' and retrieve available options
   if (feature && FeatureOptions.includes(feature)) {
