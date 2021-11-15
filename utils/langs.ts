@@ -1,4 +1,11 @@
-export const LanguageOptions = ['javascript', 'typescript', 'rust', 'go', 'python3', 'java'] as const;
+export const LanguageOptions = [
+  'javascript',
+  'typescript',
+  'rust',
+  'go',
+  'python3',
+  'java',
+] as const;
 
 export type Language = typeof LanguageOptions[number];
 
