@@ -55,7 +55,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
 
       <h1>rosetta</h1>
 
-      <p>rosetta for programming languages and tools.</p>
+      <p>rosetta for software development.</p>
 
       <p>
         contribute on{' '}
