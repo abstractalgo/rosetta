@@ -12,6 +12,8 @@ const Home: NextPage = () => {
       </Head>
 
       <h1>rosetta</h1>
+      
+      <p>rosetta for programming languages and tools.</p>
     </div>
   );
 };
