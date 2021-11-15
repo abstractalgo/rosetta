@@ -1,4 +1,4 @@
-import { Button, Card, MenuItem } from '@blueprintjs/core';
+import { Button, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC } from 'react';
 import { Feature } from '../utils/features';
@@ -10,16 +10,18 @@ const LangSelect = Select.ofType<Language>();
 
 type ColumnProps = {
   feature: Feature;
-  languages: Language[];
+  availableLangs: Language[];
   lang: Language | null;
+  content?: string;
   onSelect: (lang: Language) => void;
   onRemove: () => void;
 };
 
 export const Column: FC<ColumnProps> = ({
   feature,
-  languages,
+  availableLangs,
   lang,
+  content,
   onSelect,
   onRemove,
 }) => {
@@ -28,7 +30,7 @@ export const Column: FC<ColumnProps> = ({
       <LangSelect
         filterable
         activeItem={lang}
-        items={languages}
+        items={availableLangs}
         popoverProps={{
           minimal: true,
         }}
@@ -63,16 +65,13 @@ export const Column: FC<ColumnProps> = ({
       </LangSelect>
       {lang && <Button small icon="small-cross" onClick={() => onRemove()} />}
 
-      {!lang ? (
-        <div>select a language</div>
+      {!lang || !content ? (
+        <p>Please select a language from the list.</p>
       ) : (
         <div className="markdown">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            ```js const fuck = 34;```
-          </ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
         </div>
       )}
-      <p>list</p>
     </div>
   );
 };

@@ -1,28 +1,36 @@
 import { MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import type { NextPage, NextPageContext } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { Column } from '../../components/Column';
-import { Feature, FeatureMeta, FeatureOptions } from '../../utils/features';
-import { Language, LanguageOptions } from '../../utils/langs';
+import { Column } from '../components/Column';
+import { Feature, FeatureMeta, FeatureOptions } from '../utils/features';
+import { Language, LanguageOptions } from '../utils/langs';
+import { readFile, readdir } from 'fs/promises';
 
 const FeatureSelect = Select.ofType<Feature>();
 
 type RosettaPageProps = {
-  listing: Record<Feature, Record<Language, string>>;
+  files: Partial<Record<Language, string>>;
+  availableLangs: Language[];
+  query: {
+    feature: Feature | null;
+    langs: Language[];
+  };
 };
 
-const RosettaPage: NextPage<RosettaPageProps> = ({ listing }) => {
+const RosettaPage: NextPage<RosettaPageProps> = ({
+  files,
+  query,
+  availableLangs,
+}) => {
   const router = useRouter();
-
-  const query = router.query as { feature: Feature; langs: Language[] };
 
   const [feature, setFeature] = useState<Feature | null>(query.feature || null);
   const [langs, setLangs] = useState<Language[]>(query.langs || []);
+
+  const currentPath = `/${feature}/${langs.join('/')}`;
 
   useEffect(() => {
     if (!feature) {
@@ -30,7 +38,10 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ listing }) => {
       return;
     }
 
-    router.push(`/${feature}/${langs.join('/')}`);
+    if (router.pathname !== currentPath) {
+      router.push(currentPath);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [langs, feature]);
 
@@ -94,12 +105,16 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ listing }) => {
             columnGap: '20px',
           }}
         >
-          {[...langs, null].map((lang, idx) => (
+          {(langs.length === availableLangs.length
+            ? langs
+            : [...langs, null]
+          ).map((lang, idx) => (
             <Column
+              availableLangs={availableLangs}
               key={`${lang}-${idx}`}
               feature={feature}
-              languages={LanguageOptions as unknown as Language[]}
               lang={lang}
+              content={lang ? files[lang] : undefined}
               onSelect={(selectedLang) => {
                 if (!lang) {
                   setLangs([...langs, selectedLang]);
@@ -125,8 +140,56 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ listing }) => {
 };
 
 export async function getServerSideProps(context: NextPageContext) {
+  const query = context.query as { path: string[] };
+  const feature = query.path.length > 0 ? (query.path[0] as Feature) : null;
+  const langs =
+    query.path.length > 1 ? (query.path.slice(1) as Language[]) : [];
+
+  const props: RosettaPageProps = {
+    availableLangs: [],
+    files: {},
+    query: {
+      feature: null,
+      langs: [],
+    },
+  };
+
+  if (feature && FeatureOptions.includes(feature)) {
+    props.query.feature = feature;
+
+    const filenames = await readdir(`./rosetta/${props.query.feature}`, {
+      encoding: 'utf-8',
+    });
+
+    props.availableLangs = filenames
+      .map((filename) => filename.replace('.md', '') as Language)
+      .filter((name) => LanguageOptions.includes(name as Language));
+  }
+
+  if (props.query.feature && langs.length > 0) {
+    // only allow specified languages
+    props.query.langs = langs
+      .filter((lang) => LanguageOptions.includes(lang))
+      // and only allow languages that have files
+      .filter((lang) => props.availableLangs.includes(lang));
+
+    const files = await Promise.all(
+      props.query.langs.map((lang) => {
+        const path = `./rosetta/${feature}/${lang}.md`;
+        console.log(path);
+        return readFile(path, {
+          encoding: 'utf-8',
+        });
+      }),
+    );
+
+    props.query.langs.map(
+      (lang, idx) => (props.files[lang] = files[idx] ? files[idx] : undefined),
+    );
+  }
+
   return {
-    props: {}, // will be passed to the page component as props
+    props,
   };
 }
 
