@@ -140,11 +140,13 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
 };
 
 export async function getServerSideProps(context: NextPageContext) {
+  // parse pathname and try to extra initial 'feature' and 'langs'
   const query = context.query as { path: string[] };
   const feature = query.path.length > 0 ? (query.path[0] as Feature) : null;
   const langs =
     query.path.length > 1 ? (query.path.slice(1) as Language[]) : [];
 
+  // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {
     availableLangs: [],
     files: {},
@@ -154,6 +156,7 @@ export async function getServerSideProps(context: NextPageContext) {
     },
   };
 
+  // verify 'feature' and retrieve available options
   if (feature && FeatureOptions.includes(feature)) {
     props.query.feature = feature;
 
@@ -166,6 +169,7 @@ export async function getServerSideProps(context: NextPageContext) {
       .filter((name) => LanguageOptions.includes(name as Language));
   }
 
+  // verify 'langs' and fetch file content for each of them
   if (props.query.feature && langs.length > 0) {
     // only allow specified languages
     props.query.langs = langs
@@ -183,9 +187,7 @@ export async function getServerSideProps(context: NextPageContext) {
       }),
     );
 
-    props.query.langs.map(
-      (lang, idx) => (props.files[lang] = files[idx] ? files[idx] : undefined),
-    );
+    props.query.langs.map((lang, idx) => (props.files[lang] = files[idx]));
   }
 
   return {
