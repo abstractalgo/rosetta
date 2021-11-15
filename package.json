@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:prod": "cp -r rosetta/ /rosetta && next build",
+    "build:prod": "cp -r rosetta/ /rosetta && ls -lah / && next build",
     "start": "next start",
     "lint": "next lint"
   },
