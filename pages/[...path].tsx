@@ -155,14 +155,14 @@ export async function getServerSideProps(context: NextPageContext) {
     },
   };
 
+  const PREFIX = process.env.NODE_ENV === 'production' ? '../../..' : '.';
+
   // verify 'feature' and retrieve available options
   if (feature && FeatureOptions.includes(feature)) {
     props.query.feature = feature;
 
-    const PREFIX = process.env.NODE_ENV === 'production' ? '..' : '.';
-
     const filenames = await readdir(
-      `${__dirname}/rosetta/${props.query.feature}`,
+      `${PREFIX}/rosetta/${props.query.feature}`,
       {
         encoding: 'utf-8',
       },
@@ -183,7 +183,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
     const files = await Promise.all(
       props.query.langs.map((lang) => {
-        const path = `./rosetta/${feature}/${lang}.md`;
+        const path = `${PREFIX}/rosetta/${feature}/${lang}.md`;
         console.log(path);
         return readFile(path, {
           encoding: 'utf-8',
