@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:prod": "cp -r rosetta/ /rosetta && chmod -R 777 /rosetta && next build",
+    "build:prod": "cp -r rosetta/ /rosetta && chmod -R 777 && npm rebuild node-sass /rosetta && next build",
     "start": "next start",
     "lint": "next lint"
   },
