@@ -9,7 +9,6 @@ import remarkGfm from 'remark-gfm';
 const LangSelect = Select.ofType<Language>();
 
 type ColumnProps = {
-  feature: Feature;
   availableLangs: Language[];
   lang: Language | null;
   content?: string;
@@ -18,7 +17,6 @@ type ColumnProps = {
 };
 
 export const Column: FC<ColumnProps> = ({
-  feature,
   availableLangs,
   lang,
   content,
