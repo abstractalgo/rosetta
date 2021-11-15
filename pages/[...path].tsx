@@ -9,6 +9,7 @@ import { Column } from '../components/Column';
 import { Feature, FeatureMeta, FeatureOptions } from '../utils/features';
 import { Language, LanguageOptions } from '../utils/langs';
 import { readFile, readdir } from 'fs/promises';
+import path from 'path';
 
 const FeatureSelect = Select.ofType<Feature>();
 
@@ -181,7 +182,8 @@ export async function getServerSideProps(context: NextPageContext) {
     },
   };
 
-  const PREFIX = process.env.NODE_ENV === 'production' ? '' : '.';
+  // const PREFIX = process.env.NODE_ENV === 'production' ? '' : '.';
+  const PREFIX = path.resolve('./public');
 
   // verify 'feature' and retrieve available options
   if (feature && FeatureOptions.includes(feature)) {
