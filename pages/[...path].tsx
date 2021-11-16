@@ -48,125 +48,118 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
   }, [techs, topic]);
 
   return (
-    <div>
+    <main>
       <Head>
         <title>rosetta</title>
-        <meta name="description" content="rosetta tech directory" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
+      <p>
+        A{' '}
+        <a
+          href="https://www.google.com/search?q=rosetta+stone+meaning"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Rosetta stone
+        </a>{' '}
+        for software development.
+      </p>
+      <p>
+        Compare solutions to the same problem in different technologies and
+        languages, side by side. Useful for learning and recall.{' '}
+      </p>
 
-      <main>
-        <p>
-          A{' '}
-          <a
-            href="https://www.google.com/search?q=rosetta+stone+meaning"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Rosetta stone
-          </a>{' '}
-          for software development.
-        </p>
-        <p>
-          Compare solutions to the same problem in different technologies and
-          languages, side by side. Useful for learning and recall.{' '}
-        </p>
+      <p>
+        This is an open source project. Contribute on{' '}
+        <a
+          href="https://github.com/abstractalgo/rosetta"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Github
+        </a>
+        .
+      </p>
+      <p>
+        <a
+          href="https://github.com/abstractalgo/rosetta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            alt="GitHub Repo stars"
+            src="https://img.shields.io/github/stars/abstractalgo/rosetta?label=Stars&style=social"
+          ></img>
+        </a>
+      </p>
 
-        <p>
-          This is an open source project. Contribute on{' '}
-          <a
-            href="https://github.com/abstractalgo/rosetta"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Github
-          </a>
-          .
-        </p>
-        <p>
-          <a
-            href="https://github.com/abstractalgo/rosetta"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              alt="GitHub Repo stars"
-              src="https://img.shields.io/github/stars/abstractalgo/rosetta?label=Stars&style=social"
-            ></img>
-          </a>
-        </p>
-
-        <div
-          style={{
-            margin: '40px 0',
+      <div
+        style={{
+          margin: '40px 0',
+        }}
+      >
+        <TopicSelect
+          filterable
+          activeItem={topic}
+          items={TopicOptions as unknown as Topic[]}
+          onItemSelect={(topic) => setTopic(topic)}
+          itemRenderer={(topic, { handleClick, modifiers: { active } }) => (
+            <MenuItem
+              key={topic}
+              selected={active}
+              onClick={handleClick}
+              text={TopicMeta[topic].label}
+            />
+          )}
+          inputProps={{
+            small: true,
+          }}
+          popoverProps={{
+            minimal: true,
           }}
         >
-          <TopicSelect
-            filterable
-            activeItem={topic}
-            items={TopicOptions as unknown as Topic[]}
-            onItemSelect={(topic) => setTopic(topic)}
-            itemRenderer={(topic, { handleClick, modifiers: { active } }) => (
-              <MenuItem
-                key={topic}
-                selected={active}
-                onClick={handleClick}
-                text={TopicMeta[topic].label}
-              />
-            )}
-            inputProps={{
-              small: true,
-            }}
-            popoverProps={{
-              minimal: true,
-            }}
-          >
-            <Button small>
-              {topic === null
-                ? 'Select a topic...'
-                : `${TopicMeta[topic].label}`}
-            </Button>
-          </TopicSelect>
+          <Button small>
+            {topic === null ? 'Select a topic...' : `${TopicMeta[topic].label}`}
+          </Button>
+        </TopicSelect>
 
-          {topic && <p>{TopicMeta[topic].description}</p>}
-        </div>
+        {topic && <p>{TopicMeta[topic].description}</p>}
+      </div>
 
-        {topic && (
-          <div className="column-grid">
-            {(techs.length === availableTechs.length
-              ? techs
-              : [...techs, null]
-            ).map((tech, idx) => (
-              <Column
-                topic={topic}
-                availableTechs={availableTechs.filter(
-                  (item) => item === tech || !techs.includes(item),
-                )}
-                key={`${tech}-${idx}`}
-                tech={tech}
-                content={tech ? files[tech] : undefined}
-                onSelect={(selectedTech) => {
-                  if (!tech) {
-                    setTechs([...techs, selectedTech]);
-                  } else {
-                    const idx = techs.indexOf(tech);
-                    techs.splice(idx, 1, selectedTech);
-                    setTechs([...techs]);
-                  }
-                }}
-                onRemove={() => {
-                  if (!tech) {
-                    return;
-                  }
-                  techs.splice(idx, 1);
+      {topic && (
+        <div className="column-grid">
+          {(techs.length === availableTechs.length
+            ? techs
+            : [...techs, null]
+          ).map((tech, idx) => (
+            <Column
+              topic={topic}
+              availableTechs={availableTechs.filter(
+                (item) => item === tech || !techs.includes(item),
+              )}
+              key={`${tech}-${idx}`}
+              tech={tech}
+              content={tech ? files[tech] : undefined}
+              onSelect={(selectedTech) => {
+                if (!tech) {
+                  setTechs([...techs, selectedTech]);
+                } else {
+                  const idx = techs.indexOf(tech);
+                  techs.splice(idx, 1, selectedTech);
                   setTechs([...techs]);
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </main>
-    </div>
+                }
+              }}
+              onRemove={() => {
+                if (!tech) {
+                  return;
+                }
+                techs.splice(idx, 1);
+                setTechs([...techs]);
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </main>
   );
 };
 
