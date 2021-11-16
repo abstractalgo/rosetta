@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn prettier --write ./
+yarn prettier --write ./ --loglevel silent
 yarn eslint --fix "**/*.{js,ts,tsx,jsx}"
