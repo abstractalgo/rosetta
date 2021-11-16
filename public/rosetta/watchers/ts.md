@@ -1,6 +1,6 @@
 You can use `nodemon` or `tsc --watch`.
 
-# Using `nodemon`
+### Using `nodemon`
 
 Visit https://www.npmjs.com/package/nodemon for more details.
 
@@ -10,7 +10,7 @@ Previously `nodemon` was unable to work with Typescript files, but now it can, b
 
 You can configure it all through CLI, `nodemonConfig` region in the `package.json`, or by providing a config file (usually `nodemon.json`).
 
-# Using `tsc --watch`
+### Using `tsc --watch`
 
 Visit for https://www.typescriptlang.org/docs/handbook/configuring-watch.html for more details.
 

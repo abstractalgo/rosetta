@@ -1,9 +1,9 @@
 export const LanguageOptions = [
-  'javascript',
-  'typescript',
+  'js',
+  'ts',
   'rust',
-  'golang',
-  'python3',
+  'go',
+  'python',
   'java',
 ] as const;
 
@@ -18,10 +18,10 @@ export const LanguageMeta: Record<
     alt?: string[];
   }
 > = {
-  javascript: { label: 'JavaScript', alt: ['js'] },
-  typescript: { label: 'Typescript', alt: ['ts'] },
-  golang: { label: 'Go', alt: ['go'] },
-  python3: { label: 'Python3', alt: ['py'] },
+  js: { label: 'JavaScript', alt: ['javascript'] },
+  ts: { label: 'Typescript', alt: ['typescript'] },
+  go: { label: 'Go', alt: ['golang'] },
+  python: { label: 'Python', alt: ['py'] },
   rust: { label: 'Rust', alt: ['rs'] },
   java: { label: 'Java' },
 };

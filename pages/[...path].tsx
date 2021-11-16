@@ -58,8 +58,8 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
       <main
         style={{
           width: '100%',
-          padding: '0 40px',
-          maxWidth: 'calc(100% - 80px)',
+          padding: '0 20px',
+          maxWidth: '100%',
           overflow: 'hidden',
         }}
       >
