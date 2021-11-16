@@ -1,4 +1,4 @@
-export const LanguageOptions = [
+export const TechOptions = [
   'js',
   'ts',
   'rust',
@@ -7,12 +7,12 @@ export const LanguageOptions = [
   'java',
 ] as const;
 
-export type Language = typeof LanguageOptions[number];
+export type Technology = typeof TechOptions[number];
 
-export const LanguageMeta: Record<
-  Language,
+export const TechMeta: Record<
+  Technology,
   {
-    // label is how the language will be displayed
+    // label is how the tech will be displayed
     label: string;
     // alternative names that will be used while filtering with query
     alt?: string[];

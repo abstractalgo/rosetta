@@ -1,87 +1,103 @@
-import { Button, ButtonGroup, MenuItem } from '@blueprintjs/core';
+import { AnchorButton, Button, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC } from 'react';
-import { Feature } from '../utils/features';
-import { Language, LanguageMeta } from '../utils/langs';
+import { Topic } from '../utils/topic';
+import { Technology, TechMeta } from '../utils/techs';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const LangSelect = Select.ofType<Language>();
+const TechSelect = Select.ofType<Technology>();
 
 type ColumnProps = {
-  feature: Feature;
-  availableLangs: Language[];
-  lang: Language | null;
+  topic: Topic;
+  availableTechs: Technology[];
+  tech: Technology | null;
   content?: string;
-  onSelect: (lang: Language) => void;
+  onSelect: (tech: Technology) => void;
   onRemove: () => void;
 };
 
 export const Column: FC<ColumnProps> = ({
-  feature,
-  availableLangs,
-  lang,
+  topic,
+  availableTechs,
+  tech,
   content,
   onSelect,
   onRemove,
 }) => {
   return (
     <div className="column" /* bp4-dark */>
-      <ButtonGroup>
-        <LangSelect
-          filterable
-          activeItem={lang}
-          items={availableLangs}
-          popoverProps={{
-            minimal: true,
-          }}
-          inputProps={{
-            small: true,
-          }}
-          itemRenderer={(
-            langItem,
-            { handleClick, modifiers: { active, disabled } },
-          ) => (
-            <MenuItem
-              key={langItem}
-              selected={active}
-              onClick={handleClick}
-              text={LanguageMeta[langItem].label}
+      <header>
+        <div>
+          <TechSelect
+            filterable
+            activeItem={tech}
+            items={availableTechs}
+            popoverProps={{
+              minimal: true,
+            }}
+            inputProps={{
+              small: true,
+            }}
+            itemRenderer={(
+              techItem,
+              { handleClick, modifiers: { active, disabled } },
+            ) => (
+              <MenuItem
+                key={techItem}
+                selected={active}
+                onClick={handleClick}
+                text={TechMeta[techItem].label}
+              />
+            )}
+            onItemSelect={(techItem) => onSelect(techItem)}
+            itemPredicate={(query, techItem) => {
+              if (!query || tech === techItem) {
+                return true;
+              }
+              return [techItem, ...(TechMeta[techItem].alt || [])]
+                .map((name) => name.toLowerCase())
+                .some((name) => name.match(query.toLowerCase()));
+            }}
+          >
+            <Button
+              text={tech ? TechMeta[tech].label : 'Select tech...'}
+              small
+              outlined
+            />
+          </TechSelect>
+          {tech && (
+            <Button
+              small
+              icon="small-cross"
+              onClick={() => onRemove()}
+              minimal
             />
           )}
-          onItemSelect={(langItem) => onSelect(langItem)}
-          itemPredicate={(query, langItem) => {
-            if (!query || lang === langItem) {
-              return true;
-            }
-            return [langItem, ...(LanguageMeta[langItem].alt || [])]
-              .map((name) => name.toLowerCase())
-              .some((name) => name.match(query.toLowerCase()));
-          }}
-        >
-          <Button
-            text={lang ? LanguageMeta[lang].label : 'Select language...'}
-            small
-          />
-        </LangSelect>
-        {lang && <Button small icon="small-cross" onClick={() => onRemove()} />}
-      </ButtonGroup>
-
-      {!lang || !content ? (
-        <p>Please select a language from the list.</p>
-      ) : (
-        <div className="markdown">
-          View{' '}
-          <a
-            href={`/rosetta/${feature}/${lang}.md`}
+        </div>
+        {tech && (
+          <AnchorButton
+            style={{
+              fontSize: '85%',
+              fontWeight: 600,
+            }}
+            href={`/rosetta/${topic}/${tech}.md`}
             target="_blank"
             rel="noopener noreferrer"
+            minimal
+            small
+            title="View raw Markdown"
           >
             raw
-          </a>
-          .<ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-        </div>
-      )}
+          </AnchorButton>
+        )}
+      </header>
+
+      <div className="markdown">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {!tech || !content ? '^ Select a tech from the list.' : content}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 };

@@ -4,9 +4,9 @@ import RosettaPage from './[...path]';
 const Home: NextPage = () => {
   return (
     <RosettaPage
-      availableLangs={[]}
+      availableTechs={[]}
       files={{}}
-      query={{ feature: null, langs: [] }}
+      query={{ topic: null, techs: [] }}
     />
   );
 };

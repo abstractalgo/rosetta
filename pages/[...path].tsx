@@ -6,36 +6,36 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { Column } from '../components/Column';
-import { Feature, FeatureMeta, FeatureOptions } from '../utils/features';
-import { Language, LanguageOptions } from '../utils/langs';
+import { Topic, TopicMeta, TopicOptions } from '../utils/topic';
+import { Technology, TechOptions } from '../utils/techs';
 import { readFile, readdir } from 'fs/promises';
 import path from 'path';
 
-const FeatureSelect = Select.ofType<Feature>();
+const TopicSelect = Select.ofType<Topic>();
 
 type RosettaPageProps = {
-  files: Partial<Record<Language, string>>;
-  availableLangs: Language[];
+  files: Partial<Record<Technology, string>>;
+  availableTechs: Technology[];
   query: {
-    feature: Feature | null;
-    langs: Language[];
+    topic: Topic | null;
+    techs: Technology[];
   };
 };
 
 const RosettaPage: NextPage<RosettaPageProps> = ({
   files,
   query,
-  availableLangs,
+  availableTechs,
 }) => {
   const router = useRouter();
 
-  const [feature, setFeature] = useState<Feature | null>(query.feature || null);
-  const [langs, setLangs] = useState<Language[]>(query.langs || []);
+  const [topic, setTopic] = useState<Topic | null>(query.topic || null);
+  const [techs, setTechs] = useState<Technology[]>(query.techs || []);
 
-  const currentPath = `/${feature}/${langs.join('/')}`;
+  const currentPath = `/${topic}/${techs.join('/')}`;
 
   useEffect(() => {
-    if (!feature) {
+    if (!topic) {
       router.push(`/`);
       return;
     }
@@ -45,7 +45,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [langs, feature]);
+  }, [techs, topic]);
 
   return (
     <div>
@@ -58,17 +58,29 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
       <main
         style={{
           width: '100%',
-          padding: '0 20px',
+          padding: '20px',
           maxWidth: '100%',
           overflow: 'hidden',
         }}
       >
-        <h1>rosetta</h1>
-
-        <p>rosetta for software development.</p>
+        <p>
+          A{' '}
+          <a
+            href="https://www.google.com/search?q=rosetta+stone+meaning"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Rosetta stone
+          </a>{' '}
+          for software development.
+        </p>
+        <p>
+          Compare solutions to the same problem in different technologies and
+          languages, side by side. Useful for learning and recall.{' '}
+        </p>
 
         <p>
-          contribute on{' '}
+          This is an open source project. Contribute on{' '}
           <a
             href="https://github.com/abstractalgo/rosetta"
             target="_blank"
@@ -76,11 +88,13 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
           >
             Github
           </a>
+          .
+        </p>
+        <p>
           <img
             alt="GitHub Repo stars"
             src="https://img.shields.io/github/stars/abstractalgo/rosetta?label=Stars&style=social"
           ></img>
-          .
         </p>
 
         <div
@@ -88,17 +102,17 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
             margin: '40px 0',
           }}
         >
-          <FeatureSelect
+          <TopicSelect
             filterable
-            activeItem={feature}
-            items={FeatureOptions as unknown as Feature[]}
-            onItemSelect={(feature) => setFeature(feature)}
-            itemRenderer={(feature, { handleClick, modifiers: { active } }) => (
+            activeItem={topic}
+            items={TopicOptions as unknown as Topic[]}
+            onItemSelect={(topic) => setTopic(topic)}
+            itemRenderer={(topic, { handleClick, modifiers: { active } }) => (
               <MenuItem
-                key={feature}
+                key={topic}
                 selected={active}
                 onClick={handleClick}
-                text={FeatureMeta[feature].label}
+                text={TopicMeta[topic].label}
               />
             )}
             inputProps={{
@@ -109,53 +123,53 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
             }}
           >
             <Button small>
-              {feature === null
-                ? 'Select a feature...'
-                : `${FeatureMeta[feature].label}`}
+              {topic === null
+                ? 'Select a topic...'
+                : `${TopicMeta[topic].label}`}
             </Button>
-          </FeatureSelect>
+          </TopicSelect>
 
-          {feature && <p>{FeatureMeta[feature].description}</p>}
+          {topic && <p>{TopicMeta[topic].description}</p>}
         </div>
 
-        {feature && (
+        {topic && (
           <div
             style={{
               display: 'grid',
               gridAutoFlow: 'column',
-              gridAutoColumns: '400px',
-              columnGap: '20px',
+              gridAutoColumns: '480px',
+              columnGap: '10px',
               width: '100%',
               overflow: 'scroll',
             }}
           >
-            {(langs.length === availableLangs.length
-              ? langs
-              : [...langs, null]
-            ).map((lang, idx) => (
+            {(techs.length === availableTechs.length
+              ? techs
+              : [...techs, null]
+            ).map((tech, idx) => (
               <Column
-                feature={feature}
-                availableLangs={availableLangs.filter(
-                  (item) => item === lang || !langs.includes(item),
+                topic={topic}
+                availableTechs={availableTechs.filter(
+                  (item) => item === tech || !techs.includes(item),
                 )}
-                key={`${lang}-${idx}`}
-                lang={lang}
-                content={lang ? files[lang] : undefined}
-                onSelect={(selectedLang) => {
-                  if (!lang) {
-                    setLangs([...langs, selectedLang]);
+                key={`${tech}-${idx}`}
+                tech={tech}
+                content={tech ? files[tech] : undefined}
+                onSelect={(selectedTech) => {
+                  if (!tech) {
+                    setTechs([...techs, selectedTech]);
                   } else {
-                    const idx = langs.indexOf(lang);
-                    langs.splice(idx, 1, selectedLang);
-                    setLangs([...langs]);
+                    const idx = techs.indexOf(tech);
+                    techs.splice(idx, 1, selectedTech);
+                    setTechs([...techs]);
                   }
                 }}
                 onRemove={() => {
-                  if (!lang) {
+                  if (!tech) {
                     return;
                   }
-                  langs.splice(idx, 1);
-                  setLangs([...langs]);
+                  techs.splice(idx, 1);
+                  setTechs([...techs]);
                 }}
               />
             ))}
@@ -167,53 +181,53 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
 };
 
 export async function getServerSideProps(context: NextPageContext) {
-  // parse pathname and try to extra initial 'feature' and 'langs'
+  // parse pathname and try to extra initial 'topic' and 'techs'
   const query = context.query as { path: string[] };
-  const feature = query.path.length > 0 ? (query.path[0] as Feature) : null;
-  const langs =
-    query.path.length > 1 ? (query.path.slice(1) as Language[]) : [];
+  const topic = query.path.length > 0 ? (query.path[0] as Topic) : null;
+  const techs =
+    query.path.length > 1 ? (query.path.slice(1) as Technology[]) : [];
 
   // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {
-    availableLangs: [],
+    availableTechs: [],
     files: {},
     query: {
-      feature: null,
-      langs: [],
+      topic: null,
+      techs: [],
     },
   };
 
-  // const PREFIX = process.env.NODE_ENV === 'production' ? '' : '.';
+  // ! THIS IS VERY SENSITIVE !
   const PREFIX = path.resolve('./public');
 
-  // verify 'feature' and retrieve available options
-  if (feature && FeatureOptions.includes(feature)) {
-    props.query.feature = feature;
+  // verify 'topic' and retrieve available options
+  if (topic && TopicOptions.includes(topic)) {
+    props.query.topic = topic;
 
-    const filenames = await readdir(`${PREFIX}/rosetta/${props.query.feature}`);
+    const filenames = await readdir(`${PREFIX}/rosetta/${props.query.topic}`);
 
-    props.availableLangs = filenames
-      .map((filename) => filename.toString().replace('.md', '') as Language)
-      .filter((name) => LanguageOptions.includes(name as Language));
+    props.availableTechs = filenames
+      .map((filename) => filename.toString().replace('.md', '') as Technology)
+      .filter((name) => TechOptions.includes(name as Technology));
   }
 
-  // verify 'langs' and fetch file content for each of them
-  if (props.query.feature && langs.length > 0) {
-    // only allow specified languages
-    props.query.langs = langs
-      .filter((lang) => LanguageOptions.includes(lang))
-      // and only allow languages that have files
-      .filter((lang) => props.availableLangs.includes(lang));
+  // verify 'techs' and fetch file content for each of them
+  if (props.query.topic && techs.length > 0) {
+    // only allow specified techs
+    props.query.techs = techs
+      .filter((tech) => TechOptions.includes(tech))
+      // and only allow techs that have files
+      .filter((tech) => props.availableTechs.includes(tech));
 
     const files = await Promise.all(
-      props.query.langs.map((lang) => {
-        const path = `${PREFIX}/rosetta/${feature}/${lang}.md`;
+      props.query.techs.map((tech) => {
+        const path = `${PREFIX}/rosetta/${topic}/${tech}.md`;
         return readFile(path);
       }),
     );
 
-    props.query.langs.map(
-      (lang, idx) => (props.files[lang] = files[idx]?.toString()),
+    props.query.techs.map(
+      (tech, idx) => (props.files[tech] = files[idx]?.toString()),
     );
   }
 
