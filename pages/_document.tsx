@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-title-in-document-head */
 import Document, {
   Html,
   Head,
@@ -15,10 +16,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-          <meta name="description" content="rosetta tech directory" />
-          <link rel="icon" href="/logo.svg" />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

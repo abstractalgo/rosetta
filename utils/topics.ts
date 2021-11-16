@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 // Unique identifiers for topics.
 //
 // IMPORTANT: try not to update existing identifiers, but only add new ones,
@@ -18,8 +16,10 @@ export type Topic = typeof TopicOptions[number];
 export const TopicMeta: Record<
   Topic,
   {
+    // this is how the topic will be displayed in the list
     label: string;
-    description?: ReactNode;
+    // used for browser tab title
+    description: string;
   }
 > = {
   'tooling-watchers': {

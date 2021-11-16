@@ -3,7 +3,6 @@ import { Button, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import type { NextPage, NextPageContext } from 'next';
 import { useRouter } from 'next/dist/client/router';
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { Column } from '../components/Column';
 import { Topic, TopicMeta, TopicOptions } from '../utils/topics';
@@ -11,6 +10,7 @@ import { Technology, TechOptions } from '../utils/techs';
 import { readFile, readdir } from 'fs/promises';
 import path from 'path';
 import { CONSTANTS } from '../utils/constants';
+import { MetaTags } from '../components/MetaTags';
 
 const TopicSelect = Select.ofType<Topic>();
 
@@ -50,9 +50,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
 
   return (
     <main>
-      <Head>
-        <title>rosetta</title>
-      </Head>
+      <MetaTags titleSection={topic ? TopicMeta[topic].description : ''} />
       <p>
         A{' '}
         <a
