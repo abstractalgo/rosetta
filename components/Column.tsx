@@ -109,12 +109,8 @@ export const Column: FC<ColumnProps> = ({
               tech ? (
                 <TechItem tech={tech} />
               ) : (
-                `${
-                  idx === 0
-                    ? 'Select first'
-                    : idx === 1
-                    ? 'Select second'
-                    : 'Add another'
+                `Select ${
+                  idx === 0 ? 'first' : idx === 1 ? 'second' : 'another'
                 } tech...`
               )
             }
