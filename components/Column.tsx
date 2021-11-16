@@ -161,7 +161,7 @@ export const Column: FC<ColumnProps> = ({
           </div>
         ) : (
           <div className="spinner">
-            <Spinner />
+            <Spinner size={48} />
           </div>
         ))}
     </div>

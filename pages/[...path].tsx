@@ -187,11 +187,16 @@ export async function getServerSideProps(context: NextPageContext) {
 
   // verify 'techs' and fetch file content for each of them
   if (props.query.topic && techs.length > 0) {
-    // only allow specified techs
-    props.query.techs = techs
-      .filter((tech) => TechOptions.includes(tech))
-      // and only allow techs that have files
-      .filter((tech) => props.availableTechs.includes(tech));
+    props.query.techs = Array.from(
+      // make sure all techs are loaded at most once
+      new Set(
+        techs
+          // only allow registered techs
+          .filter((tech) => TechOptions.includes(tech))
+          // and only allow techs that have files
+          .filter((tech) => props.availableTechs.includes(tech)),
+      ),
+    );
   }
 
   return {
