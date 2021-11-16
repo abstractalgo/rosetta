@@ -3,8 +3,8 @@ import {
   AnchorButton,
   Button,
   MenuItem,
-  Icon,
   Spinner,
+  ButtonGroup,
 } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC, useEffect, useState } from 'react';
@@ -122,36 +122,38 @@ export const Column: FC<ColumnProps> = ({
         {
           tech && (
             <div>
-              <AnchorButton
-                style={{
-                  fontSize: '85%',
-                  fontWeight: 600,
-                  color: 'rgba(87, 96, 106, 0.7)',
-                }}
-                href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`}
-                target="_blank"
-                rel="noopener noreferrer"
-                minimal
-                small
-                title="View raw Markdown"
-              >
-                raw
-              </AnchorButton>
-              <AnchorButton
-                href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/rosetta/${topic}/${tech}.md`}
-                target="_blank"
-                icon={
-                  <Icon
-                    icon="annotation"
-                    size={14}
-                    color={'rgba(87, 96, 106, 0.7)'}
-                  />
-                }
-                rel="noopener noreferrer"
-                minimal
-                small
-                title="Edit on Github"
-              />
+              <ButtonGroup>
+                <AnchorButton
+                  href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  minimal
+                  small
+                  title="View raw Markdown"
+                  style={{
+                    fontSize: '85%',
+                    fontWeight: 600,
+                    color: 'rgba(87, 96, 106, 0.7)',
+                  }}
+                >
+                  raw
+                </AnchorButton>
+                <AnchorButton
+                  href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/rosetta/${topic}/${tech}.md`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  minimal
+                  small
+                  title="Edit on Github"
+                  style={{
+                    fontSize: '85%',
+                    fontWeight: 600,
+                    color: 'rgba(87, 96, 106, 0.7)',
+                  }}
+                >
+                  edit
+                </AnchorButton>
+              </ButtonGroup>
               <Button
                 small
                 icon="small-cross"
