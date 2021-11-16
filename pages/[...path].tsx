@@ -62,8 +62,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
           </p>
           <p>
             Compare solutions to the same problem in different technologies and
-            languages, side by side. Useful for learning or as a reference
-            guide.{' '}
+            languages, side by side. Useful for learning or as a reference.
           </p>
         </div>
         <div>
