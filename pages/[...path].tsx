@@ -124,6 +124,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
             : [...techs, null]
           ).map((tech, idx) => (
             <Column
+              idx={idx}
               topic={topic}
               availableTechs={availableTechs.filter(
                 (item) => item === tech || !techs.includes(item),

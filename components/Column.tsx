@@ -32,6 +32,7 @@ const TechItem: FC<{ tech: Technology }> = ({ tech }) => (
 );
 
 type ColumnProps = {
+  idx: number;
   topic: Topic;
   availableTechs: Technology[];
   tech: Technology | null;
@@ -40,6 +41,7 @@ type ColumnProps = {
 };
 
 export const Column: FC<ColumnProps> = ({
+  idx,
   topic,
   availableTechs,
   tech,
@@ -99,7 +101,19 @@ export const Column: FC<ColumnProps> = ({
           }}
         >
           <Button
-            text={tech ? <TechItem tech={tech} /> : 'Select tech...'}
+            text={
+              tech ? (
+                <TechItem tech={tech} />
+              ) : (
+                `${
+                  idx === 0
+                    ? 'Select first'
+                    : idx === 1
+                    ? 'Select second'
+                    : 'Add another'
+                } tech...`
+              )
+            }
             small
             outlined
             rightIcon="caret-down"
