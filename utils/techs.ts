@@ -26,7 +26,7 @@ export const TechMeta: Record<
     icon: string;
   }
 > = {
-  js: { label: 'JavaScript', alt: ['javascript'], icon: '/tech-icons/js.png' },
+  js: { label: 'Javascript', alt: ['javascript'], icon: '/tech-icons/js.png' },
   ts: { label: 'Typescript', alt: ['typescript'], icon: '/tech-icons/ts.png' },
   go: { label: 'Go', alt: ['golang'], icon: '/tech-icons/go.png' },
   python: { label: 'Python', alt: ['py'], icon: '/tech-icons/python.png' },
