@@ -67,7 +67,9 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
         </div>
         <div>
           <p>
-            This is an open source project. Contribute on{' '}
+            This is an open source project.
+            <br />
+            Contribute on{' '}
             <a
               href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}`}
               target="_blank"
