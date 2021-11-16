@@ -28,7 +28,7 @@ export const Column: FC<ColumnProps> = ({
 }) => {
   return (
     <div className="column" /* bp4-dark */>
-      <header>
+      <header className={!tech ? 'empty' : ''}>
         <TechSelect
           filterable
           activeItem={tech}
@@ -67,57 +67,60 @@ export const Column: FC<ColumnProps> = ({
             rightIcon="caret-down"
           />
         </TechSelect>
-        {tech && (
-          <div>
-            <AnchorButton
-              style={{
-                fontSize: '85%',
-                fontWeight: 600,
-                color: 'rgba(87, 96, 106, 0.7)',
-              }}
-              href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-              minimal
-              small
-              title="View raw Markdown"
-            >
-              raw
-            </AnchorButton>
-            <AnchorButton
-              href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/rosetta/${topic}/${tech}.md`}
-              target="_blank"
-              icon={
-                <Icon
-                  icon="annotation"
-                  size={14}
-                  color={'rgba(87, 96, 106, 0.7)'}
-                />
-              }
-              rel="noopener noreferrer"
-              minimal
-              small
-              title="Edit on Github"
-            />
-            <Button
-              small
-              icon="small-cross"
-              title="Close this column"
-              onClick={() => onRemove()}
-              minimal
-              style={{
-                marginLeft: '16px',
-              }}
-            />
-          </div>
-        )}
+        {
+          tech && (
+            <div>
+              <AnchorButton
+                style={{
+                  fontSize: '85%',
+                  fontWeight: 600,
+                  color: 'rgba(87, 96, 106, 0.7)',
+                }}
+                href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`}
+                target="_blank"
+                rel="noopener noreferrer"
+                minimal
+                small
+                title="View raw Markdown"
+              >
+                raw
+              </AnchorButton>
+              <AnchorButton
+                href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/rosetta/${topic}/${tech}.md`}
+                target="_blank"
+                icon={
+                  <Icon
+                    icon="annotation"
+                    size={14}
+                    color={'rgba(87, 96, 106, 0.7)'}
+                  />
+                }
+                rel="noopener noreferrer"
+                minimal
+                small
+                title="Edit on Github"
+              />
+              <Button
+                small
+                icon="small-cross"
+                title="Close this column"
+                onClick={() => onRemove()}
+                minimal
+                style={{
+                  marginLeft: '16px',
+                }}
+              />
+            </div>
+          )
+          /* <div><Icon icon="caret-left" /> Select a tech from the list.</div> */
+        }
       </header>
 
-      <div className="markdown">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {!tech || !content ? '^ Select a tech from the list.' : content}
-        </ReactMarkdown>
-      </div>
+      {tech && content && (
+        <div className="markdown">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+        </div>
+      )}
     </div>
   );
 };
