@@ -10,6 +10,7 @@ export const TechOptions = [
   'go',
   'python',
   'java',
+  'nodejs',
 ] as const;
 
 export type Technology = typeof TechOptions[number];
@@ -32,4 +33,5 @@ export const TechMeta: Record<
   python: { label: 'Python', alt: ['py'], icon: '/tech-icons/python.png' },
   rust: { label: 'Rust', alt: ['rs'], icon: '/tech-icons/rust.png' },
   java: { label: 'Java', icon: '/tech-icons/java.png' },
+  nodejs: { label: 'NodeJS', icon: '/tech-icons/nodejs.png' },
 };

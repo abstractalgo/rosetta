@@ -54,9 +54,13 @@ export const Column: FC<ColumnProps> = ({
     const fetchContent = async () => {
       try {
         setContent(null);
-        const res = await fetch(
-          `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`,
-        );
+
+        const docUrl =
+          process.env.NODE_ENV === 'production'
+            ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`
+            : `/rosetta/${topic}/${tech}.md`;
+
+        const res = await fetch(docUrl);
         const rawMarkdown = await res.text();
         setContent(rawMarkdown);
       } catch {
