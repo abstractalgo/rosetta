@@ -1,34 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# <img src="./public/logo.svg" height="20px"> rosetta
 
-## Getting Started
+A directory of various software techniques and features demonstrated in multiple technologies and languages that you can compare side by side. Use it for learning or quick recall.
 
-First, run the development server:
+## Contributing
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- make changes and test things locally (see [running locally](#running-locally))
+- submit your changes as new PRs
+- make sure to follow the [Guildelines](#contributor-guidelines)
+- all PRs will have a preview build generated automatically
+- get approving reviews for your PR
+- merge changes (all pushes get automatically deployed to the live website)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Currently all snippets are placed within `/public/rosetta` folder, in the form of `<topic>/<tech>.md`.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+> - `<topic>` corresponds to those found in `/utils/topic.ts`
+> - `<tech>` correponds to those found in `/utils/techs.ts`
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Add/modify snippets as Markdown (`.md`) files, exclusively. [Github flavored Markdown (GFM)](https://github.github.com/gfm/) formatting is supported.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Adding a new tech
 
-## Learn More
+To add a new tech to an existing topic (i.e. add another column as an option), just create a file within `/public/rosetta/<topic>/<tech>.md` and populate it with content. Find the `<tech>` identifiers within `/utils/techs.ts` (filenames will be matched exactly with these expected identifiers).
 
-To learn more about Next.js, take a look at the following resources:
+If you don't see a technology listed, you can modify `/utils/techs.ts` to add a new tech and its details (this will "register" it), and then do the mentioned steps to add a file snippet.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Adding a new topic
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To add a new topic, modify `/utils/topic.ts` to "register" the topic, and then create corresponding folder within `/public/rosetta`, with appropriate `<tech>.md` files within.
 
-## Deploy on Vercel
+## Running locally
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This is a [Next.js](https://nextjs.org/) project ([React](https://reactjs.org) with [Typescript](https://www.typescriptlang.org)), hosted on [Vercel](https://vercel.com/). To learn more about it visit [Next.js documentation](https://nextjs.org/docs).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+To run things locally, use [yarn](https://yarnpkg.com) and Next.js-provided scripts.
+
+- install dependencies by running `yarn install`
+- to start the development server use `yarn dev` (this will start listening on [http://localhost:3000](http://localhost:3000))
+
+## Contributor guidelines
+
+to be defined
