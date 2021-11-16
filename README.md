@@ -1,6 +1,6 @@
 # <img src="./public/logo.svg" height="20px"> rosetta
 
-A directory of various software development techniques demonstrated in multiple technologies and languages that you can compare side by side. Use it for learning or as a reference.
+A directory of various software development techniques demonstrated in multiple technologies and languages that you can compare side by side. Can be used for learning or as a reference.
 
 ## Contributing
 
