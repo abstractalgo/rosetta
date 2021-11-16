@@ -1,3 +1,12 @@
+a {
+  color: rgb(9, 105, 218);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 main {
   width: 100%;
   padding: 20px;
