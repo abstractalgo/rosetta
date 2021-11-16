@@ -22,12 +22,14 @@ export const TechMeta: Record<
     // alternative names that will be used while filtering with query
     // (these ids aren't used in the formation of the URL)
     alt?: string[];
+    // icons
+    icon: string;
   }
 > = {
-  js: { label: 'JavaScript', alt: ['javascript'] },
-  ts: { label: 'Typescript', alt: ['typescript'] },
-  go: { label: 'Go', alt: ['golang'] },
-  python: { label: 'Python', alt: ['py'] },
-  rust: { label: 'Rust', alt: ['rs'] },
-  java: { label: 'Java' },
+  js: { label: 'JavaScript', alt: ['javascript'], icon: '/tech-icons/js.png' },
+  ts: { label: 'Typescript', alt: ['typescript'], icon: '/tech-icons/ts.png' },
+  go: { label: 'Go', alt: ['golang'], icon: '/tech-icons/go.png' },
+  python: { label: 'Python', alt: ['py'], icon: '/tech-icons/python.png' },
+  rust: { label: 'Rust', alt: ['rs'], icon: '/tech-icons/rust.png' },
+  java: { label: 'Java', icon: '/tech-icons/java.png' },
 };

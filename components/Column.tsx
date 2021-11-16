@@ -9,6 +9,20 @@ import { CONSTANTS } from '../utils/constants';
 
 const TechSelect = Select.ofType<Technology>();
 
+const TechItem: FC<{ tech: Technology }> = ({ tech }) => (
+  <div
+    style={{
+      display: 'grid',
+      gridAutoFlow: 'column',
+      gridAutoColumns: 'max-content',
+      columnGap: '4px',
+    }}
+  >
+    <img src={TechMeta[tech].icon} width={16} height={16} />{' '}
+    {TechMeta[tech].label}
+  </div>
+);
+
 type ColumnProps = {
   topic: Topic;
   availableTechs: Technology[];
@@ -47,7 +61,7 @@ export const Column: FC<ColumnProps> = ({
               key={techItem}
               selected={active}
               onClick={handleClick}
-              text={TechMeta[techItem].label}
+              text={<TechItem tech={techItem} />}
             />
           )}
           onItemSelect={(techItem) => onSelect(techItem)}
@@ -61,7 +75,7 @@ export const Column: FC<ColumnProps> = ({
           }}
         >
           <Button
-            text={tech ? TechMeta[tech].label : 'Select tech...'}
+            text={tech ? <TechItem tech={tech} /> : 'Select tech...'}
             small
             outlined
             rightIcon="caret-down"
