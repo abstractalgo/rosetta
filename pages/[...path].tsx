@@ -55,14 +55,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main
-        style={{
-          width: '100%',
-          padding: '20px',
-          maxWidth: '100%',
-          overflow: 'hidden',
-        }}
-      >
+      <main>
         <p>
           A{' '}
           <a
@@ -133,16 +126,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
         </div>
 
         {topic && (
-          <div
-            style={{
-              display: 'grid',
-              gridAutoFlow: 'column',
-              gridAutoColumns: '480px',
-              columnGap: '10px',
-              width: '100%',
-              overflow: 'scroll',
-            }}
-          >
+          <div className="column-grid">
             {(techs.length === availableTechs.length
               ? techs
               : [...techs, null]
@@ -198,13 +182,14 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 
   // ! THIS IS VERY SENSITIVE !
-  const PREFIX = path.resolve('./public');
+  // (don't change unless restructuring intentionally)
+  const DIR = path.resolve('./public', 'rosetta');
 
   // verify 'topic' and retrieve available options
   if (topic && TopicOptions.includes(topic)) {
     props.query.topic = topic;
 
-    const filenames = await readdir(`${PREFIX}/rosetta/${props.query.topic}`);
+    const filenames = await readdir(`${DIR}/${props.query.topic}`);
 
     props.availableTechs = filenames
       .map((filename) => filename.toString().replace('.md', '') as Technology)
@@ -221,7 +206,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
     const files = await Promise.all(
       props.query.techs.map((tech) => {
-        const path = `${PREFIX}/rosetta/${topic}/${tech}.md`;
+        const path = `${DIR}/${props.query.topic}/${tech}.md`;
         return readFile(path);
       }),
     );

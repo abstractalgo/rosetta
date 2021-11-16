@@ -70,6 +70,7 @@ export const Column: FC<ColumnProps> = ({
             <Button
               small
               icon="small-cross"
+              title="Close this column"
               onClick={() => onRemove()}
               minimal
             />
