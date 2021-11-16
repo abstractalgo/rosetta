@@ -51,16 +51,27 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
   return (
     <main>
       <MetaTags titleSection={topic ? TopicMeta[topic].description : ''} />
-      <p>
-        A{' '}
-        <a
-          href="https://www.google.com/search?q=rosetta+stone+meaning"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Rosetta stone
-        </a>{' '}
-        for software development.
+      <p
+        style={{
+          display: 'grid',
+          alignItems: 'center',
+          gridAutoFlow: 'column',
+          gridAutoColumns: 'max-content',
+          columnGap: '8px',
+        }}
+      >
+        <img src="/logo.svg" alt="logo" height="16" width="16" />
+        <div>
+          A{' '}
+          <a
+            href="https://www.google.com/search?q=rosetta+stone+meaning"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Rosetta stone
+          </a>{' '}
+          for software development.
+        </div>
       </p>
       <p>
         Compare solutions to the same problem in different technologies and
