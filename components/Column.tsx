@@ -1,7 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import { AnchorButton, Button, MenuItem, Icon } from '@blueprintjs/core';
+import {
+  AnchorButton,
+  Button,
+  MenuItem,
+  Icon,
+  Spinner,
+} from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Topic } from '../utils/topics';
 import { Technology, TechMeta } from '../utils/techs';
 import ReactMarkdown from 'react-markdown';
@@ -29,7 +35,6 @@ type ColumnProps = {
   topic: Topic;
   availableTechs: Technology[];
   tech: Technology | null;
-  content?: string;
   onSelect: (tech: Technology) => void;
   onRemove: () => void;
 };
@@ -38,10 +43,27 @@ export const Column: FC<ColumnProps> = ({
   topic,
   availableTechs,
   tech,
-  content,
   onSelect,
   onRemove,
 }) => {
+  const [content, setContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        setContent(null);
+        const res = await fetch(
+          `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`,
+        );
+        const rawMarkdown = await res.text();
+        setContent(rawMarkdown);
+      } catch {
+        setContent('Something went wrong. Try refreshing the page.');
+      }
+    };
+    fetchContent();
+  }, [tech, topic]);
+
   return (
     <div className="column" /* bp4-dark */>
       <header className={!tech ? 'empty' : ''}>
@@ -132,11 +154,16 @@ export const Column: FC<ColumnProps> = ({
         }
       </header>
 
-      {tech && content && (
-        <div className="markdown">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-        </div>
-      )}
+      {tech &&
+        (content ? (
+          <div className="markdown">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          </div>
+        ) : (
+          <div className="spinner">
+            <Spinner />
+          </div>
+        ))}
     </div>
   );
 };

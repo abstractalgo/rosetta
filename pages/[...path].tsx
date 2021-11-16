@@ -15,7 +15,6 @@ import { MetaTags } from '../components/MetaTags';
 const TopicSelect = Select.ofType<Topic>();
 
 type RosettaPageProps = {
-  files: Partial<Record<Technology, string>>;
   availableTechs: Technology[];
   query: {
     topic: Topic | null;
@@ -23,11 +22,7 @@ type RosettaPageProps = {
   };
 };
 
-const RosettaPage: NextPage<RosettaPageProps> = ({
-  files,
-  query,
-  availableTechs,
-}) => {
+const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
   const router = useRouter();
 
   const [topic, setTopic] = useState<Topic | null>(query.topic || null);
@@ -135,7 +130,6 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
               )}
               key={`${tech}-${idx}`}
               tech={tech}
-              content={tech ? files[tech] : undefined}
               onSelect={(selectedTech) => {
                 if (!tech) {
                   setTechs([...techs, selectedTech]);
@@ -170,7 +164,6 @@ export async function getServerSideProps(context: NextPageContext) {
   // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {
     availableTechs: [],
-    files: {},
     query: {
       topic: null,
       techs: [],
@@ -199,17 +192,6 @@ export async function getServerSideProps(context: NextPageContext) {
       .filter((tech) => TechOptions.includes(tech))
       // and only allow techs that have files
       .filter((tech) => props.availableTechs.includes(tech));
-
-    const files = await Promise.all(
-      props.query.techs.map((tech) => {
-        const path = `${DIR}/${props.query.topic}/${tech}.md`;
-        return readFile(path);
-      }),
-    );
-
-    props.query.techs.map(
-      (tech, idx) => (props.files[tech] = files[idx]?.toString()),
-    );
   }
 
   return {
