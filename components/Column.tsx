@@ -1,4 +1,4 @@
-import { AnchorButton, Button, MenuItem } from '@blueprintjs/core';
+import { AnchorButton, Button, MenuItem, Icon } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC } from 'react';
 import { Topic } from '../utils/topics';
@@ -72,6 +72,7 @@ export const Column: FC<ColumnProps> = ({
               style={{
                 fontSize: '85%',
                 fontWeight: 600,
+                color: 'rgba(87, 96, 106, 0.7)',
               }}
               href={`/rosetta/${topic}/${tech}.md`}
               target="_blank"
@@ -82,12 +83,30 @@ export const Column: FC<ColumnProps> = ({
             >
               raw
             </AnchorButton>
+            <AnchorButton
+              href={`https://github.com/abstractalgo/rosetta/tree/master/public/rosetta/${topic}/${tech}.md`}
+              target="_blank"
+              icon={
+                <Icon
+                  icon="annotation"
+                  size={14}
+                  color={'rgba(87, 96, 106, 0.7)'}
+                />
+              }
+              rel="noopener noreferrer"
+              minimal
+              small
+              title="Edit on Github"
+            />
             <Button
               small
               icon="small-cross"
               title="Close this column"
               onClick={() => onRemove()}
               minimal
+              style={{
+                marginLeft: '16px',
+              }}
             />
           </div>
         )}
