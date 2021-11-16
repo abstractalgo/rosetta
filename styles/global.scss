@@ -12,6 +12,26 @@ main {
   padding: 20px;
   max-width: 100%;
   overflow: hidden;
+
+  > header {
+    > div:nth-child(1) {
+      max-width: 480px;
+    }
+
+    @media screen and (min-width: 600px) {
+      display: flex;
+      justify-content: space-between;
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      > div:nth-child(2) {
+        min-width: 250px;
+        text-align: right;
+      }
+    }
+  }
 }
 
 .topic-wrapper {

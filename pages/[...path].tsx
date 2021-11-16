@@ -46,45 +46,52 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
   return (
     <main>
       <MetaTags titleSection={topic ? TopicMeta[topic].description : ''} />
-      <p>
-        A{' '}
-        <a
-          href="https://www.google.com/search?q=rosetta+stone+meaning"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Rosetta stone
-        </a>{' '}
-        for software development.
-      </p>
-      <p>
-        Compare solutions to the same problem in different technologies and
-        languages, side by side. Useful for learning or as a reference guide.{' '}
-      </p>
 
-      <p>
-        This is an open source project. Contribute on{' '}
-        <a
-          href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Github
-        </a>
-        .
-      </p>
-      <p>
-        <a
-          href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img
-            alt="GitHub Repo stars"
-            src={`https://img.shields.io/github/stars/${CONSTANTS.github_user}/${CONSTANTS.github_repo}?label=Stars&style=social`}
-          ></img>
-        </a>
-      </p>
+      <header>
+        <div>
+          <p>
+            A{' '}
+            <a
+              href="https://www.google.com/search?q=rosetta+stone+meaning"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Rosetta stone
+            </a>{' '}
+            for software development.
+          </p>
+          <p>
+            Compare solutions to the same problem in different technologies and
+            languages, side by side. Useful for learning or as a reference
+            guide.{' '}
+          </p>
+        </div>
+        <div>
+          <p>
+            This is an open source project. Contribute on{' '}
+            <a
+              href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Github
+            </a>
+            .
+          </p>
+          <p>
+            <a
+              href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="GitHub Repo stars"
+                src={`https://img.shields.io/github/stars/${CONSTANTS.github_user}/${CONSTANTS.github_repo}?label=Stars&style=social`}
+              ></img>
+            </a>
+          </p>
+        </div>
+      </header>
 
       <div className="topic-wrapper">
         Topic:{' '}
