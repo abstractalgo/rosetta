@@ -64,7 +64,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
       </p>
       <p>
         Compare solutions to the same problem in different technologies and
-        languages, side by side. Useful for learning and recall.{' '}
+        languages, side by side. Useful for learning or as a reference guide.{' '}
       </p>
 
       <p>
