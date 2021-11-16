@@ -84,10 +84,16 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
           .
         </p>
         <p>
-          <img
-            alt="GitHub Repo stars"
-            src="https://img.shields.io/github/stars/abstractalgo/rosetta?label=Stars&style=social"
-          ></img>
+          <a
+            href="https://github.com/abstractalgo/rosetta"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              alt="GitHub Repo stars"
+              src="https://img.shields.io/github/stars/abstractalgo/rosetta?label=Stars&style=social"
+            ></img>
+          </a>
         </p>
 
         <div
