@@ -67,7 +67,9 @@ export const Column: FC<ColumnProps> = ({
         setContent('Something went wrong. Try refreshing the page.');
       }
     };
-    fetchContent();
+    if (tech) {
+      fetchContent();
+    }
   }, [tech, topic]);
 
   return (
