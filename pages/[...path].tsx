@@ -10,6 +10,7 @@ import { Topic, TopicMeta, TopicOptions } from '../utils/topics';
 import { Technology, TechOptions } from '../utils/techs';
 import { readFile, readdir } from 'fs/promises';
 import path from 'path';
+import { CONSTANTS } from '../utils/constants';
 
 const TopicSelect = Select.ofType<Topic>();
 
@@ -71,7 +72,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
       <p>
         This is an open source project. Contribute on{' '}
         <a
-          href="https://github.com/abstractalgo/rosetta"
+          href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -81,13 +82,13 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
       </p>
       <p>
         <a
-          href="https://github.com/abstractalgo/rosetta"
+          href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}`}
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
             alt="GitHub Repo stars"
-            src="https://img.shields.io/github/stars/abstractalgo/rosetta?label=Stars&style=social"
+            src={`https://img.shields.io/github/stars/${CONSTANTS.github_user}/${CONSTANTS.github_repo}?label=Stars&style=social`}
           ></img>
         </a>
       </p>

@@ -5,6 +5,7 @@ import { Topic } from '../utils/topics';
 import { Technology, TechMeta } from '../utils/techs';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { CONSTANTS } from '../utils/constants';
 
 const TechSelect = Select.ofType<Technology>();
 
@@ -74,7 +75,7 @@ export const Column: FC<ColumnProps> = ({
                 fontWeight: 600,
                 color: 'rgba(87, 96, 106, 0.7)',
               }}
-              href={`/rosetta/${topic}/${tech}.md`}
+              href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`}
               target="_blank"
               rel="noopener noreferrer"
               minimal
@@ -84,7 +85,7 @@ export const Column: FC<ColumnProps> = ({
               raw
             </AnchorButton>
             <AnchorButton
-              href={`https://github.com/abstractalgo/rosetta/tree/master/public/rosetta/${topic}/${tech}.md`}
+              href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/rosetta/${topic}/${tech}.md`}
               target="_blank"
               icon={
                 <Icon
