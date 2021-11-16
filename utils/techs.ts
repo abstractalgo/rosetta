@@ -15,19 +15,22 @@ export const TechOptions = [
 
 export type Technology = typeof TechOptions[number];
 
-export const TechMeta: Record<
-  Technology,
-  {
+export const TechMeta: {
+  [tech in Technology]: {
     // label is how the tech will be displayed
     label: string;
     // alternative names that will be used while filtering with query
     // (these ids aren't used in the formation of the URL)
     alt?: string[];
     // icons
-    icon: string;
-  }
-> = {
-  js: { label: 'Javascript', alt: ['javascript'], icon: '/tech-icons/js.png' },
+    icon: `/tech-icons/${tech}.png`;
+  };
+} = {
+  js: {
+    label: 'Javascript',
+    alt: ['javascript'],
+    icon: '/tech-icons/js.png',
+  },
   ts: { label: 'Typescript', alt: ['typescript'], icon: '/tech-icons/ts.png' },
   go: { label: 'Go', alt: ['golang'], icon: '/tech-icons/go.png' },
   python: { label: 'Python', alt: ['py'], icon: '/tech-icons/python.png' },
