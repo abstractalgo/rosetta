@@ -14,8 +14,6 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { CONSTANTS } from '../utils/constants';
 
-const TechSelect = Select.ofType<Technology>();
-
 const TechItem: FC<{ tech: Technology }> = ({ tech }) => (
   <div
     style={{
@@ -75,7 +73,7 @@ export const Column: FC<ColumnProps> = ({
   return (
     <div className="column" /* bp4-dark */>
       <header className={!tech ? 'empty' : ''}>
-        <TechSelect
+        <Select<Technology>
           filterable
           activeItem={tech}
           items={availableTechs}
@@ -120,7 +118,7 @@ export const Column: FC<ColumnProps> = ({
             outlined
             rightIcon="caret-down"
           />
-        </TechSelect>
+        </Select>
         {
           tech && (
             <div>

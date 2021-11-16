@@ -7,12 +7,10 @@ import { useEffect, useState } from 'react';
 import { Column } from '../components/Column';
 import { Topic, TopicMeta, TopicOptions } from '../utils/topics';
 import { Technology, TechOptions } from '../utils/techs';
-import { readFile, readdir } from 'fs/promises';
-import path from 'path';
+import { readdir } from 'fs/promises';
+import pathFS from 'path';
 import { CONSTANTS } from '../utils/constants';
 import { MetaTags } from '../components/MetaTags';
-
-const TopicSelect = Select.ofType<Topic>();
 
 type RosettaPageProps = {
   availableTechs: Technology[];
@@ -96,7 +94,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
 
       <div className="topic-wrapper">
         Topic:{' '}
-        <TopicSelect
+        <Select<Topic>
           filterable
           activeItem={topic}
           items={TopicOptions as unknown as Topic[]}
@@ -119,7 +117,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
           <Button small outlined rightIcon="caret-down">
             {topic === null ? 'Select a topic...' : `${TopicMeta[topic].label}`}
           </Button>
-        </TopicSelect>
+        </Select>
         {/* topic && (
           <span className="topic-desc">{TopicMeta[topic].description}</span>
         ) */}
@@ -165,10 +163,8 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
 
 export async function getServerSideProps(context: NextPageContext) {
   // parse pathname and try to extra initial 'topic' and 'techs'
-  const query = context.query as { path: string[] };
-  const topic = query.path.length > 0 ? (query.path[0] as Topic) : null;
-  const techs =
-    query.path.length > 1 ? (query.path.slice(1) as Technology[]) : [];
+  const { path } = context.query as { path: [Topic, ...Technology[]] };
+  const [topic, ...techs] = path.length ? path : [null];
 
   // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {
@@ -181,13 +177,13 @@ export async function getServerSideProps(context: NextPageContext) {
 
   // ! THIS IS VERY SENSITIVE !
   // (don't change unless restructuring intentionally)
-  const DIR = path.resolve('./public', 'rosetta');
+  const DIR = pathFS.resolve('./public', 'rosetta');
 
   // verify 'topic' and retrieve available options
   if (topic && TopicOptions.includes(topic)) {
     props.query.topic = topic;
 
-    const filenames = await readdir(`${DIR}/${props.query.topic}`);
+    const filenames = await readdir(pathFS.join(DIR, props.query.topic));
 
     props.availableTechs = filenames
       .map((filename) => filename.toString().replace('.md', '') as Technology)
