@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { AnchorButton, Button, MenuItem, Icon } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC } from 'react';
@@ -18,6 +19,7 @@ const TechItem: FC<{ tech: Technology }> = ({ tech }) => (
       columnGap: '4px',
     }}
   >
+    {/* eslint-disable-next-line jsx-a11y/alt-text */}
     <img src={TechMeta[tech].icon} width={16} height={16} />{' '}
     {TechMeta[tech].label}
   </div>
