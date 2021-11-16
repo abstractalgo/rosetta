@@ -6,7 +6,7 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { Column } from '../components/Column';
-import { Topic, TopicMeta, TopicOptions } from '../utils/topic';
+import { Topic, TopicMeta, TopicOptions } from '../utils/topics';
 import { Technology, TechOptions } from '../utils/techs';
 import { readFile, readdir } from 'fs/promises';
 import path from 'path';
@@ -92,11 +92,8 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
         </a>
       </p>
 
-      <div
-        style={{
-          margin: '40px 0',
-        }}
-      >
+      <div className="topic-wrapper">
+        Topic:{' '}
         <TopicSelect
           filterable
           activeItem={topic}
@@ -117,12 +114,13 @@ const RosettaPage: NextPage<RosettaPageProps> = ({
             minimal: true,
           }}
         >
-          <Button small>
+          <Button small outlined rightIcon="caret-down">
             {topic === null ? 'Select a topic...' : `${TopicMeta[topic].label}`}
           </Button>
         </TopicSelect>
-
-        {topic && <p>{TopicMeta[topic].description}</p>}
+        {/* topic && (
+          <span className="topic-desc">{TopicMeta[topic].description}</span>
+        ) */}
       </div>
 
       {topic && (

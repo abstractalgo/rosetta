@@ -13,7 +13,7 @@ A directory of various software techniques and features demonstrated in multiple
 
 Currently all snippets are placed within `/public/rosetta` folder, in the form of `<topic>/<tech>.md`.
 
-> - `<topic>` corresponds to those found in `/utils/topic.ts`
+> - `<topic>` corresponds to those found in `/utils/topics.ts`
 > - `<tech>` correponds to those found in `/utils/techs.ts`
 
 Add/modify snippets as Markdown (`.md`) files, exclusively. [Github flavored Markdown (GFM)](https://github.github.com/gfm/) formatting is supported.
@@ -26,7 +26,7 @@ If you don't see a technology listed, you can modify `/utils/techs.ts` to add a 
 
 ### Adding a new topic
 
-To add a new topic, modify `/utils/topic.ts` to "register" the topic, and then create corresponding folder within `/public/rosetta`, with appropriate `<tech>.md` files within.
+To add a new topic, modify `/utils/topics.ts` to "register" the topic, and then create corresponding folder within `/public/rosetta`, with appropriate `<tech>.md` files within.
 
 ## Running locally
 
