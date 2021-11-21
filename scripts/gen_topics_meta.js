@@ -11,20 +11,19 @@ const generateTopicsMeta = async () => {
 
   const topicIds = await readdir(TOPICS_DIR);
   const topicsMetaFiles = await Promise.all(
-    topicIds.map(async (topicId) => {
-      try {
-        return await readFile(pathFS.join(TOPICS_DIR, topicId, 'about.yml'), {
+    topicIds.map(
+      async (topicId) =>
+        await readFile(pathFS.join(TOPICS_DIR, topicId, 'about.yml'), {
           encoding: 'utf-8',
-        });
-      } catch {
-        return '';
-      }
-    }),
+        }),
+    ),
   );
 
   const topics = await Promise.all(
     topicIds.map(async (topicId, idx) => {
       const meta = yaml.parse(topicsMetaFiles[idx]);
+      console.log(topicId);
+      console.log(meta);
       const techs = (await readdir(pathFS.join(TOPICS_DIR, topicId)))
         .filter((filename) => filename !== 'about.yml')
         .map((filename) => filename.replace('.md', ''));
