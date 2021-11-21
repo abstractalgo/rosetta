@@ -1,8 +1,11 @@
 // Unique identifiers for technologies.
+//
 // IMPORTANT: try not to update existing identifiers, but only add new ones.
+//
 // Identifiers will be used to form a URL in the shape of:
 // /<topic_id>/<tech_id1>/<tech_id2>/...
 // so use something URL-encoding friendly.
+//
 export const TechOptions = [
   'js',
   'ts',
@@ -14,7 +17,6 @@ export const TechOptions = [
   'react',
   'angular',
   'web-components',
-  // 'vue',
 ] as const;
 
 export type Technology = typeof TechOptions[number];
@@ -51,5 +53,4 @@ export const TechMeta: {
     label: 'Web Components',
     icon: '/tech-icons/web-components.png',
   },
-  // 'vue': { label: 'Vue', icon: '/tech-icons/vue.png' },
 };
