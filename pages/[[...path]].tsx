@@ -169,7 +169,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { path } = ctx.query as { path?: [string, ...Technology[]] };
   const [topicId, ...techs] = path && path.length ? path : [null];
 
-  const isRemote = !ctx.req?.headers.host?.includes('localhost:');
+  const isRemote = !!process.env.CI;
 
   // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {
