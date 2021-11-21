@@ -55,7 +55,7 @@ export const Column: FC<ColumnProps> = ({
 
         const docUrl =
           process.env.NODE_ENV === 'production'
-            ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}/public/topics/${topic}/${tech}.md`
+            ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}/public/topics/${topic.id}/${tech}.md`
             : `/topics/${topic.id}/${tech}.md`;
 
         const res = await fetch(docUrl);
