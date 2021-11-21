@@ -28,29 +28,16 @@ export const TechMeta: {
     // alternative names that will be used while filtering with query
     // (these ids aren't used in the formation of the URL)
     alt?: string[];
-    // icons
-    icon: `/tech-icons/${tech}.png`;
   };
 } = {
-  'js': {
-    label: 'Javascript',
-    alt: ['javascript'],
-    icon: '/tech-icons/js.png',
-  },
-  'ts': {
-    label: 'Typescript',
-    alt: ['typescript'],
-    icon: '/tech-icons/ts.png',
-  },
-  'go': { label: 'Go', alt: ['golang'], icon: '/tech-icons/go.png' },
-  'python': { label: 'Python', alt: ['py'], icon: '/tech-icons/python.png' },
-  'rust': { label: 'Rust', alt: ['rs'], icon: '/tech-icons/rust.png' },
-  'java': { label: 'Java', icon: '/tech-icons/java.png' },
-  'nodejs': { label: 'NodeJS', icon: '/tech-icons/nodejs.png' },
-  'react': { label: 'React', icon: '/tech-icons/react.png' },
-  'angular': { label: 'Angular', icon: '/tech-icons/angular.png' },
-  'web-components': {
-    label: 'Web Components',
-    icon: '/tech-icons/web-components.png',
-  },
+  'js': { label: 'Javascript', alt: ['javascript'] },
+  'ts': { label: 'Typescript', alt: ['typescript'] },
+  'go': { label: 'Go', alt: ['golang'] },
+  'python': { label: 'Python', alt: ['py'] },
+  'rust': { label: 'Rust', alt: ['rs'] },
+  'java': { label: 'Java' },
+  'nodejs': { label: 'NodeJS' },
+  'react': { label: 'React' },
+  'angular': { label: 'Angular' },
+  'web-components': { label: 'Web Components' },
 };

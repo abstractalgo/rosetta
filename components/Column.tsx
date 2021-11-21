@@ -24,7 +24,7 @@ const TechItem: FC<{ tech: Technology }> = ({ tech }) => (
     }}
   >
     {/* eslint-disable-next-line jsx-a11y/alt-text */}
-    <img src={TechMeta[tech].icon} width={16} height={16} />{' '}
+    <img src={`/tech-icons/${tech}.png`} width={16} height={16} />{' '}
     {TechMeta[tech].label}
   </div>
 );
