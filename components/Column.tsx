@@ -171,7 +171,7 @@ export const Column: FC<ColumnProps> = ({
       </header>
 
       {tech &&
-        (content ? (
+        (content !== null ? (
           <div className="markdown">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
           </div>

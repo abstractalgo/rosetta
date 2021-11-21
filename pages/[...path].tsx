@@ -11,6 +11,7 @@ import { readdir } from 'fs/promises';
 import pathFS from 'path';
 import { CONSTANTS } from '../utils/constants';
 import { MetaTags } from '../components/MetaTags';
+import hierarchy from '../scripts/hierarchy.json';
 
 type RosettaPageProps = {
   availableTechs: Technology[];
@@ -183,7 +184,11 @@ export async function getServerSideProps(context: NextPageContext) {
   if (topic && TopicOptions.includes(topic)) {
     props.query.topic = topic;
 
-    const filenames = await readdir(pathFS.join(DIR, props.query.topic));
+    const filenames =
+      process.env.NODE_ENV === 'production'
+        ? // @ts-ignore
+          (hierarchy[topic] as string[])
+        : await readdir(pathFS.join(DIR, props.query.topic));
 
     props.availableTechs = filenames
       .map((filename) => filename.toString().replace('.md', '') as Technology)

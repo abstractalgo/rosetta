@@ -4,8 +4,7 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "next dev",
-    "build": "next build",
-    "build:prod": "next build",
+    "build": "node scripts/gen_hierarchy.js && next build",
     "start": "next start",
     "lint": "next lint"
   },
