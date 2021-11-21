@@ -9,7 +9,7 @@
 // /<topic_id>/<tech_id1>/<tech_id2>/...
 // so use something URL-encoding friendly.
 //
-export const TopicOptions = ['tooling-watchers'] as const;
+export const TopicOptions = ['tooling-watchers', 'lang-primitives'] as const;
 
 export type Topic = typeof TopicOptions[number];
 
@@ -27,5 +27,10 @@ export const TopicMeta: Record<
     label: 'Watching for file changes and live reloading',
     description: 'Watching for file changes and live reloading',
     categories: ['Tooling'],
+  },
+  'lang-primitives': {
+    label: 'Primitive types',
+    description: 'Primitive types',
+    categories: ['Languages'],
   },
 } as const;
