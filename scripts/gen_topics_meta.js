@@ -1,4 +1,4 @@
-const { readdir, writeFile } = require('fs/promises');
+const { readdir, writeFile, readFile } = require('fs/promises');
 const pathFS = require('path');
 const yaml = require('yaml');
 
