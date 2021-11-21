@@ -8,7 +8,7 @@ import {
 } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC, useEffect, useState } from 'react';
-import { Topic } from '../utils/topics';
+import { Topic } from '../utils/topic';
 import { Technology, TechMeta } from '../utils/techs';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
