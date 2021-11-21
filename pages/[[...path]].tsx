@@ -164,10 +164,12 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, topics }) => {
   );
 };
 
-export async function getServerSideProps(context: NextPageContext) {
+export async function getServerSideProps(ctx: NextPageContext) {
   // parse pathname and try to extra initial topic and technologies
-  const { path } = context.query as { path?: [string, ...Technology[]] };
+  const { path } = ctx.query as { path?: [string, ...Technology[]] };
   const [topicId, ...techs] = path && path.length ? path : [null];
+
+  const isRemote = !ctx.req?.headers.host?.includes('localhost:');
 
   // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {
@@ -182,9 +184,7 @@ export async function getServerSideProps(context: NextPageContext) {
   // (don't change unless restructuring intentionally)
   const TOPICS_DIR = pathFS.resolve('./public', 'topics');
 
-  const isProd = process.env.NODE_ENV === 'production';
-
-  if (isProd) {
+  if (isRemote) {
     props.topics = meta['topics'] as Topic[];
   } else {
     const topicIds = await readdir(TOPICS_DIR);
