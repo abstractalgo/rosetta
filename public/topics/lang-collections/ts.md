@@ -1,5 +1,7 @@
 ### Arrays
 
+TS docs on [arrays](https://www.typescriptlang.org/docs/handbook/basic-types.html#array).
+
 ```
 let arr: number[];
 let arr: number[] = [1, 3.14, -2];
@@ -51,6 +53,8 @@ Javascript/Typescript doesn't have a concept of slices, but you can use [.slice(
 ### Tuples
 
 Javascript doesn't have a concept of tuples (you can't enforce strong limits on arrays size, they are always adjustable, i.e. you can always `.push()` more elements to it). However, Typescript can enforce types a bit more.
+
+TS docs on [tuples](https://www.typescriptlang.org/docs/handbook/basic-types.html#tuple).
 
 ```
 let tuple: [string, number, boolean] = ["pi", 3.14, true] // each index in 'tuple' can be assigned only a specific variable type
