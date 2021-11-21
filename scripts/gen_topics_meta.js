@@ -3,10 +3,6 @@ const pathFS = require('path');
 const yaml = require('yaml');
 
 const generateTopicsMeta = async () => {
-  const meta = {};
-
-  // ! THIS IS VERY SENSITIVE !
-  // (don't change unless restructuring intentionally)
   const TOPICS_DIR = pathFS.resolve('./public', 'topics');
 
   const topicIds = await readdir(TOPICS_DIR);

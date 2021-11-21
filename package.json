@@ -24,7 +24,6 @@
     "@types/node": "16.11.7",
     "@types/react": "17.0.34",
     "@types/yaml": "^1.9.7",
-    "current-git-branch": "^1.1.0",
     "eslint": "7",
     "eslint-config-next": "12.0.3",
     "husky": "^7.0.4",
