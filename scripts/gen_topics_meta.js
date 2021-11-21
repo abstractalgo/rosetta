@@ -24,15 +24,15 @@ const generateTopicsMeta = async () => {
 
   const topics = await Promise.all(
     topicIds.map(async (topicId, idx) => {
-      const meta = yaml.parse(topicsMetaFiles[idx]) || {};
+      const meta = yaml.parse(topicsMetaFiles[idx]);
       const techs = (await readdir(pathFS.join(TOPICS_DIR, topicId)))
         .filter((filename) => filename !== 'about.yml')
         .map((filename) => filename.replace('.md', ''));
 
       return {
         id: topicId,
-        label: meta['label'] || '',
-        description: meta['description'] || '',
+        label: meta['label'],
+        description: meta['description'],
         categories: meta['categories'] || [],
         availableTechs: techs,
       };
@@ -45,13 +45,13 @@ const generateTopicsMeta = async () => {
 };
 
 const genAndWriteStruct = async () => {
-  console.log('Generating hierarchy...');
+  console.log('Generating topics meta...');
   const struct = await generateTopicsMeta();
   console.log('Done.');
 
-  console.log('Writing hierarchy to a file...');
+  console.log('Writing topics meta to a file...');
   const STRUCT_DIR = pathFS.resolve('./scripts');
-  const structPath = pathFS.join(STRUCT_DIR, 'meta.json');
+  const structPath = pathFS.join(STRUCT_DIR, 'topics_meta.json');
   await writeFile(structPath, Buffer.from(JSON.stringify(struct, null, 2)));
   console.log('Done.');
 };

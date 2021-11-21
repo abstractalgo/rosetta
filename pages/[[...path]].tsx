@@ -11,7 +11,7 @@ import { readdir, readFile } from 'fs/promises';
 import pathFS from 'path';
 import { CONSTANTS } from '../utils/constants';
 import { MetaTags } from '../components/MetaTags';
-import meta from '../scripts/meta.json';
+import meta from '../scripts/topics_meta.json';
 import yaml from 'yaml';
 
 type RosettaPageProps = {
@@ -165,9 +165,9 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, topics }) => {
 };
 
 export async function getServerSideProps(context: NextPageContext) {
-  // parse pathname and try to extra initial 'topic' and 'techs'
-  const { path } = context.query as { path: [string, ...Technology[]] };
-  const [topicId, ...techs] = path.length ? path : [null];
+  // parse pathname and try to extra initial topic and technologies
+  const { path } = context.query as { path?: [string, ...Technology[]] };
+  const [topicId, ...techs] = path && path.length ? path : [null];
 
   // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {

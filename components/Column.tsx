@@ -56,7 +56,7 @@ export const Column: FC<ColumnProps> = ({
         const docUrl =
           process.env.NODE_ENV === 'production'
             ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/topics/${topic}/${tech}.md`
-            : `/topics/${topic}/${tech}.md`;
+            : `/topics/${topic.id}/${tech}.md`;
 
         const res = await fetch(docUrl);
         const rawMarkdown = await res.text();
