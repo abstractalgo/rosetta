@@ -20,10 +20,12 @@ export const TopicMeta: Record<
     label: string;
     // used for browser tab title
     description: string;
+    categories?: readonly string[];
   }
 > = {
   'tooling-watchers': {
-    label: 'Tooling — Watching for file changes and live reloading',
+    label: 'Watching for file changes and live reloading',
     description: 'Watching for file changes and live reloading',
+    categories: ['Tooling'],
   },
 } as const;

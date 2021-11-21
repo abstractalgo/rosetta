@@ -106,6 +106,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
               selected={active}
               onClick={handleClick}
               text={TopicMeta[topic].label}
+              label={(TopicMeta[topic].categories || []).join(', ')}
             />
           )}
           inputProps={{
