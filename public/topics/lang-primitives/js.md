@@ -1,4 +1,4 @@
-Numbers (integers, floats etc):
+### Numbers (integers, floats etc):
 
 ```
 let value = 42;
@@ -22,7 +22,7 @@ let value = NaN;       // https://developer.mozilla.org/en-US/docs/Web/JavaScrip
 typeof 3.14 // "number"
 ```
 
-Strings:
+### Strings:
 ```
 let value = "some text";
 let value = 'some text';
@@ -39,7 +39,7 @@ let b = 2;
 let value = `some text ${a + b}`; // "some text 3"
 ```
 
-Booleans:
+### Booleans:
 ```
 let value = true;
 let value = false;
@@ -51,7 +51,7 @@ false || true // true ('or')
 typeof false  // "boolean"
 ```
 
-Nullish values:
+### Nullish values:
 ```
 let value = null
 let value = undefined

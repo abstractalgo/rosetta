@@ -1,4 +1,4 @@
-Numbers (integers, floats etc):
+### Numbers (integers, floats etc):
 
 ```
 let value: number = 42;
@@ -21,7 +21,7 @@ let value: number = NaN;       // https://developer.mozilla.org/en-US/docs/Web/J
 ```
 &nbsp;
 
-Strings:
+### Strings:
 ```
 let value: string = "some text";
 let value: string = 'some text';
@@ -39,7 +39,7 @@ let value: string = `some text ${a + b}`; // "some text 3"
 
 &nbsp;
 
-Booleans:
+### Booleans:
 ```
 let value: boolean = true;
 let value: boolean = false;
@@ -50,7 +50,7 @@ false || true // true ('or')
 ```
 &nbsp;
 
-Nullish values:
+### Nullish values:
 ```
 let value: null = null
 let value: undefined = undefined
