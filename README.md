@@ -13,9 +13,6 @@ A directory of various software development techniques demonstrated in multiple 
 
 Currently all snippets are placed within `/public/topics` folder, in the form of `<topic>/<tech>.md`.
 
-> - `<topic>` corresponds to those found in `/utils/topics.ts`
-> - `<tech>` correponds to those found in `/utils/techs.ts`
-
 Add/modify snippets as Markdown (`.md`) files, exclusively. [Github flavored Markdown (GFM)](https://github.github.com/gfm/) formatting is supported.
 
 ### Adding a new tech
@@ -26,7 +23,7 @@ If you don't see a technology listed, you can modify `/utils/techs.ts` to add a 
 
 ### Adding a new topic
 
-To add a new topic, modify `/utils/topics.ts` to "register" the topic, and then create corresponding folder within `/public/topics`, with appropriate `<tech>.md` files within.
+To add a new topic, create a folder within `/public/topics` and add `about.yml` file (made based on this [topic template](/utils/TOPIC_TEMPLATE.yml)). Then add tech files inside that folder one by one.
 
 ## Running locally
 
