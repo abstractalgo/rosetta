@@ -8,7 +8,7 @@ import {
 } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { FC, useEffect, useState } from 'react';
-import { Topic } from '../utils/topics';
+import { Topic } from '../utils/topic';
 import { Technology, TechMeta } from '../utils/techs';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -54,9 +54,9 @@ export const Column: FC<ColumnProps> = ({
         setContent(null);
 
         const docUrl =
-          process.env.NODE_ENV === 'production'
-            ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/topics/${topic}/${tech}.md`
-            : `/topics/${topic}/${tech}.md`;
+          process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+            ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}/public/topics/${topic.id}/${tech}.md`
+            : `/topics/${topic.id}/${tech}.md`;
 
         const res = await fetch(docUrl);
         const rawMarkdown = await res.text();

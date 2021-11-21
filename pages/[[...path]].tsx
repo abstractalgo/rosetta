@@ -5,29 +5,30 @@ import type { NextPage, NextPageContext } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react';
 import { Column } from '../components/Column';
-import { Topic, TopicMeta, TopicOptions } from '../utils/topics';
+import { Topic } from '../utils/topic';
 import { Technology, TechOptions } from '../utils/techs';
-import { readdir } from 'fs/promises';
+import { readdir, readFile } from 'fs/promises';
 import pathFS from 'path';
 import { CONSTANTS } from '../utils/constants';
 import { MetaTags } from '../components/MetaTags';
-import hierarchy from '../scripts/hierarchy.json';
+import meta from '../scripts/topics_meta.json';
+import yaml from 'yaml';
 
 type RosettaPageProps = {
-  availableTechs: Technology[];
+  topics: Topic[];
   query: {
     topic: Topic | null;
     techs: Technology[];
   };
 };
 
-const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
+const RosettaPage: NextPage<RosettaPageProps> = ({ query, topics }) => {
   const router = useRouter();
 
   const [topic, setTopic] = useState<Topic | null>(query.topic || null);
   const [techs, setTechs] = useState<Technology[]>(query.techs || []);
 
-  const currentPath = `/${topic}/${techs.join('/')}`;
+  const currentPath = topic ? `/${topic.id}/${techs.join('/')}` : '';
 
   useEffect(() => {
     if (!topic) {
@@ -44,7 +45,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
 
   return (
     <main>
-      <MetaTags titleSection={topic ? TopicMeta[topic].description : ''} />
+      <MetaTags titleSection={topic ? topic.description : ''} />
 
       <header>
         <div>
@@ -98,15 +99,15 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
         <Select<Topic>
           filterable
           activeItem={topic}
-          items={TopicOptions as unknown as Topic[]}
+          items={topics}
           onItemSelect={(topic) => setTopic(topic)}
           itemRenderer={(topic, { handleClick, modifiers: { active } }) => (
             <MenuItem
-              key={topic}
+              key={topic.id}
               selected={active}
               onClick={handleClick}
-              text={TopicMeta[topic].label}
-              label={(TopicMeta[topic].categories || []).join(', ')}
+              text={topic.label}
+              label={topic.categories.join(', ')}
             />
           )}
           inputProps={{
@@ -117,7 +118,7 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
           }}
         >
           <Button small outlined rightIcon="caret-down">
-            {topic === null ? 'Select a topic...' : `${TopicMeta[topic].label}`}
+            {topic === null ? 'Select a topic...' : `${topic.label}`}
           </Button>
         </Select>
         {/* topic && (
@@ -127,14 +128,14 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
 
       {topic && (
         <div className="column-grid">
-          {(techs.length === availableTechs.length
+          {(techs.length === topic.availableTechs.length
             ? techs
             : [...techs, null]
           ).map((tech, idx) => (
             <Column
               idx={idx}
               topic={topic}
-              availableTechs={availableTechs.filter(
+              availableTechs={topic.availableTechs.filter(
                 (item) => item === tech || !techs.includes(item),
               )}
               key={`${tech}-${idx}`}
@@ -163,14 +164,16 @@ const RosettaPage: NextPage<RosettaPageProps> = ({ query, availableTechs }) => {
   );
 };
 
-export async function getServerSideProps(context: NextPageContext) {
-  // parse pathname and try to extra initial 'topic' and 'techs'
-  const { path } = context.query as { path: [Topic, ...Technology[]] };
-  const [topic, ...techs] = path.length ? path : [null];
+export async function getServerSideProps(ctx: NextPageContext) {
+  // parse pathname and try to extra initial topic and technologies
+  const { path } = ctx.query as { path?: [string, ...Technology[]] };
+  const [topicId, ...techs] = path && path.length ? path : [null];
+
+  const isRemote = !!process.env.CI;
 
   // this is the shape of props we'll be passing to the page component
   const props: RosettaPageProps = {
-    availableTechs: [],
+    topics: [],
     query: {
       topic: null,
       techs: [],
@@ -179,35 +182,60 @@ export async function getServerSideProps(context: NextPageContext) {
 
   // ! THIS IS VERY SENSITIVE !
   // (don't change unless restructuring intentionally)
-  const DIR = pathFS.resolve('./public', 'topics');
+  const TOPICS_DIR = pathFS.resolve('./public', 'topics');
 
-  // verify 'topic' and retrieve available options
-  if (topic && TopicOptions.includes(topic)) {
-    props.query.topic = topic;
+  if (isRemote) {
+    props.topics = meta['topics'] as Topic[];
+  } else {
+    const topicIds = await readdir(TOPICS_DIR);
+    const topicsMetaFiles = await Promise.all(
+      topicIds.map(async (topicId) => {
+        try {
+          return await readFile(pathFS.join(TOPICS_DIR, topicId, 'about.yml'), {
+            encoding: 'utf-8',
+          });
+        } catch {
+          return '';
+        }
+      }),
+    );
 
-    const filenames =
-      process.env.NODE_ENV === 'production'
-        ? // @ts-ignore
-          (hierarchy[topic] as string[])
-        : await readdir(pathFS.join(DIR, props.query.topic));
+    props.topics = await Promise.all(
+      topicIds.map(async (topicId, idx) => {
+        const meta = yaml.parse(topicsMetaFiles[idx]) || {};
+        const techs = (await readdir(pathFS.join(TOPICS_DIR, topicId)))
+          .filter((filename) => filename !== 'about.yml')
+          .map((filename) => filename.replace('.md', '')) as Technology[];
 
-    props.availableTechs = filenames
-      .map((filename) => filename.toString().replace('.md', '') as Technology)
-      .filter((name) => TechOptions.includes(name as Technology));
+        return {
+          id: topicId,
+          label: meta['label'] || '',
+          description: meta['description'] || '',
+          categories: meta['categories'] || [],
+          availableTechs: techs.filter((tech) => TechOptions.includes(tech)),
+        };
+      }),
+    );
   }
 
-  // verify 'techs' and fetch file content for each of them
-  if (props.query.topic && techs.length > 0) {
-    props.query.techs = Array.from(
-      // make sure all techs are loaded at most once
-      new Set(
-        techs
-          // only allow registered techs
-          .filter((tech) => TechOptions.includes(tech))
-          // and only allow techs that have files
-          .filter((tech) => props.availableTechs.includes(tech)),
-      ),
-    );
+  if (
+    topicId &&
+    props.topics.filter((topic) => topic.id === topicId).length === 1
+  ) {
+    props.query.topic = props.topics.find((topic) => topic.id === topicId)!;
+
+    if (techs.length > 0) {
+      props.query.techs = Array.from(
+        // make sure all techs are loaded at most once
+        new Set(
+          techs
+            // only allow registered techs
+            .filter((tech) => TechOptions.includes(tech))
+            // and only allow techs that have files
+            .filter((tech) => props.query.topic!.availableTechs.includes(tech)),
+        ),
+      );
+    }
   }
 
   return {
