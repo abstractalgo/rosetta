@@ -11,6 +11,10 @@ export const TechOptions = [
   'python',
   'java',
   'nodejs',
+  'react',
+  'angular',
+  'web-components',
+  // 'vue',
 ] as const;
 
 export type Technology = typeof TechOptions[number];
@@ -26,15 +30,26 @@ export const TechMeta: {
     icon: `/tech-icons/${tech}.png`;
   };
 } = {
-  js: {
+  'js': {
     label: 'Javascript',
     alt: ['javascript'],
     icon: '/tech-icons/js.png',
   },
-  ts: { label: 'Typescript', alt: ['typescript'], icon: '/tech-icons/ts.png' },
-  go: { label: 'Go', alt: ['golang'], icon: '/tech-icons/go.png' },
-  python: { label: 'Python', alt: ['py'], icon: '/tech-icons/python.png' },
-  rust: { label: 'Rust', alt: ['rs'], icon: '/tech-icons/rust.png' },
-  java: { label: 'Java', icon: '/tech-icons/java.png' },
-  nodejs: { label: 'NodeJS', icon: '/tech-icons/nodejs.png' },
+  'ts': {
+    label: 'Typescript',
+    alt: ['typescript'],
+    icon: '/tech-icons/ts.png',
+  },
+  'go': { label: 'Go', alt: ['golang'], icon: '/tech-icons/go.png' },
+  'python': { label: 'Python', alt: ['py'], icon: '/tech-icons/python.png' },
+  'rust': { label: 'Rust', alt: ['rs'], icon: '/tech-icons/rust.png' },
+  'java': { label: 'Java', icon: '/tech-icons/java.png' },
+  'nodejs': { label: 'NodeJS', icon: '/tech-icons/nodejs.png' },
+  'react': { label: 'React', icon: '/tech-icons/react.png' },
+  'angular': { label: 'Angular', icon: '/tech-icons/angular.png' },
+  'web-components': {
+    label: 'Web Components',
+    icon: '/tech-icons/web-components.png',
+  },
+  // 'vue': { label: 'Vue', icon: '/tech-icons/vue.png' },
 };
