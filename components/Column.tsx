@@ -55,8 +55,8 @@ export const Column: FC<ColumnProps> = ({
 
         const docUrl =
           process.env.NODE_ENV === 'production'
-            ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`
-            : `/rosetta/${topic}/${tech}.md`;
+            ? `https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/topics/${topic}/${tech}.md`
+            : `/topics/${topic}/${tech}.md`;
 
         const res = await fetch(docUrl);
         const rawMarkdown = await res.text();
@@ -124,7 +124,7 @@ export const Column: FC<ColumnProps> = ({
             <div>
               <ButtonGroup>
                 <AnchorButton
-                  href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/rosetta/${topic}/${tech}.md`}
+                  href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/topics/${topic}/${tech}.md`}
                   target="_blank"
                   rel="noopener noreferrer"
                   minimal
@@ -139,7 +139,7 @@ export const Column: FC<ColumnProps> = ({
                   raw
                 </AnchorButton>
                 <AnchorButton
-                  href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/rosetta/${topic}/${tech}.md`}
+                  href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/topics/${topic}/${tech}.md`}
                   target="_blank"
                   rel="noopener noreferrer"
                   minimal

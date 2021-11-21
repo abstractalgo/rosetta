@@ -6,7 +6,7 @@ const generageRosettaHierarchy = async () => {
 
   // ! THIS IS VERY SENSITIVE !
   // (don't change unless restructuring intentionally)
-  const ROSETTA_DIR = path.resolve('./public', 'rosetta');
+  const ROSETTA_DIR = path.resolve('./public', 'topics');
 
   const topicFolders = await readdir(ROSETTA_DIR);
 

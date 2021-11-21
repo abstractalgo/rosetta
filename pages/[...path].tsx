@@ -178,7 +178,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
   // ! THIS IS VERY SENSITIVE !
   // (don't change unless restructuring intentionally)
-  const DIR = pathFS.resolve('./public', 'rosetta');
+  const DIR = pathFS.resolve('./public', 'topics');
 
   // verify 'topic' and retrieve available options
   if (topic && TopicOptions.includes(topic)) {
