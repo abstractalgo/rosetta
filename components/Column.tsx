@@ -124,7 +124,7 @@ export const Column: FC<ColumnProps> = ({
             <div>
               <ButtonGroup>
                 <AnchorButton
-                  href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/topics/${topic}/${tech}.md`}
+                  href={`https://raw.githubusercontent.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/master/public/topics/${topic.id}/${tech}.md`}
                   target="_blank"
                   rel="noopener noreferrer"
                   minimal
@@ -139,7 +139,7 @@ export const Column: FC<ColumnProps> = ({
                   raw
                 </AnchorButton>
                 <AnchorButton
-                  href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/topics/${topic}/${tech}.md`}
+                  href={`https://github.com/${CONSTANTS.github_user}/${CONSTANTS.github_repo}/edit/master/public/topics/${topic.id}/${tech}.md`}
                   target="_blank"
                   rel="noopener noreferrer"
                   minimal
